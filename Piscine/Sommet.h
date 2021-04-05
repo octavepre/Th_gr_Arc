@@ -24,6 +24,15 @@ public:
     std::string getNom()const{return m_nomLieu;}
     int getAltitude()const{return m_altitude;}
     bool getVisite()const{return m_visite;}
+    int size_succ()const{return m_succ.size();}
+    int getSuccNum(int i);
+    int size_pred()const{return m_chemin.size();}
+    void push_pred(int i){m_chemin.push_back(i);}
+    int GetPred(int i){return m_chemin[i];}
+    void setVisiteToTrue(){m_visite = true;}
+    int calculPoid(std::vector <Sommet*> m_sommet,int depart);
+    int getPoidPred(int num);
+
 
 };
 
@@ -42,6 +51,8 @@ public:
     void calculPoid(int typeDescente);
     int getPoid()const{return m_poid;}
     std::string getType() const {return m_type;}
+    int getNumFirst()const{return m_lien.first->getNum();}
+
 };
 
 #endif // SOMMET_H_INCLUDED

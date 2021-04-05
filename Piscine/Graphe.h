@@ -19,6 +19,7 @@ public:
     void setPoidDescente(int typeDescente);
     void Dijkstra(int depart,int arriver);
     bool AllTrue(std::vector <Sommet> listeChemin)const;
+    void setVisiteToTrueAll(std::vector <Sommet>& PleaseWork,int current);
 };
 
 #endif // GRAPHE_H_INCLUDED

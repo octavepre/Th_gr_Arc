@@ -67,16 +67,82 @@ void Graphe::Dijkstra(int depart,int arriver)
     listeChemin.push_back(*m_sommets[current]);
     Sommet pivot = listeChemin[0];
     int compteur=1;
-    while(AllTrue(listeChemin) && m_sommets[current]->getNum() != arriver)
+    //std::cout << "[" << m_sommets[depart]->getNum() << "," << m_sommets[arriver]->getNum() << "]";
+    //std::cout << "[" << pivot.getNum() <<"]";
+    while(AllTrue(listeChemin) == false /*&& m_sommets[current]->getNum() != arriver*/)
     {
+        ///On ajoute les sortants(successeurs) du chemin actuel dans les nouveaux chemin possible
+        for(unsigned int i = 0 ; i < m_sommets[current]->size_succ() ; i++)
+        {
+             int transition = m_sommets[current]->getSuccNum(i)-1;
+             //std::cout << "[" << m_sommets[transition]->getNum() << "]";
+             ///Si le sommet n'a pas été visité on l'ajoute dans les chemins potentiel
+            if(m_sommets[transition]->getVisite() == false && m_sommets[current]->getVisite() == false)
+            {
+                Sommet preservationPred = *m_sommets[transition];
+                preservationPred.push_pred(m_sommets[current]->getNum());
+                for (int i = 0; i < pivot.size_pred() ; i++)
+                {
+                    preservationPred.push_pred(pivot.GetPred(i));
+                }
+                listeChemin.push_back(preservationPred);
+            }
+        }
 
+        ///permet de ne pas comparé une distance de 0 avec le reste
+        ///on enleve le sommet de départ juste apres avoir ajouter ces successeurs
+        if (compteur == 1)
+        {
+            listeChemin.erase(listeChemin.begin());
+            pivot = listeChemin[0];
+            compteur = 0;
+        }
+        ///on dit que le sommet qui a ajouter ces successeurs a été visité
+        m_sommets[current]->setVisiteToTrue();
+        ///ainsi que tout les chemin qui ont le meme numéro que lui
+        setVisiteToTrueAll(listeChemin,current);
+
+
+        for(int i = 0 ; i < listeChemin.size() ; i++)
+        {
+
+            if(pivot.calculPoid(m_sommets,depart) > listeChemin[i].calculPoid(m_sommets,depart) && listeChemin[i].getVisite() == false)
+            {
+                pivot = listeChemin[i];
+            }
+            else if (pivot.calculPoid(m_sommets,depart) == listeChemin[i].calculPoid(m_sommets,depart) && listeChemin[i].getVisite() == false)
+            {
+                pivot = listeChemin[i];
+            }
+        }
+        std::cout<< "{" <<pivot.getNum()<<"}"<<pivot.calculPoid(m_sommets,depart)<<"|" << std::endl;
+        if(pivot.getNum() == current)
+        {
+            for(int i = 0 ; i < listeChemin.size() ; i++)
+            {
+                if(listeChemin[i].getVisite() == false)
+                {
+                    pivot = listeChemin[i];
+                }
+            }
+        }
+        ///on change le numero du current qui est le numero du sommet qui est entrain d'etre utilisé
+        current = pivot.getNum();
+
+
+        ///TESTE/////////////////////////////////////////////////////////////////////////////////////////////////
+        for (unsigned int i = 0 ; i < listeChemin.size() ; i++)
+        {
+            std::cout << listeChemin[i].getNum() <<std::endl;
+        }
+        std::cout <<std::endl<<std::endl;
     }
 }
 
 bool Graphe::AllTrue(std::vector <Sommet> listeChemin)const
 {
     int compteur = 0;
-    for(int  i = 0 ; i < listeChemin.size() ; i++)
+    for(unsigned int  i = 0 ; i < listeChemin.size() ; i++)
     {
         if(m_sommets[listeChemin[i].getNum()]->getVisite() == true)
         {
@@ -90,5 +156,16 @@ bool Graphe::AllTrue(std::vector <Sommet> listeChemin)const
     else if (compteur != listeChemin.size())
     {
         return false;
+    }
+}
+void Graphe::setVisiteToTrueAll(std::vector <Sommet>& listeChemin,int current)
+{
+    for(unsigned int i = 0; i < listeChemin.size() ; i++)
+    {
+        if (listeChemin[i].getNum() == current)
+        {
+            listeChemin[i].setVisiteToTrue();
+        }
+
     }
 }

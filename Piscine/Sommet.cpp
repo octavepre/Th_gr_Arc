@@ -17,3 +17,37 @@ void Sommet::afficherS()
     }
     std::cout<<std::endl;
 }
+
+int Sommet::getSuccNum(int i)
+{
+    return m_succ[i]->getNumSecond();
+}
+
+///COMPLETEMENT BUGUER
+int Sommet::calculPoid(std::vector <Sommet*> m_sommet,int depart)
+{
+
+    int Totale = 0;
+    //std::cout << "!" << Totale + m_sommet[m_chemin[0]-2]->getPoidPred(m_num) << "!";
+    for (int i = 0 ; i < m_chemin.size()-1 ; i++)
+    {
+        //std::cout << "!" << m_sommet[m_chemin[i+1]-1]->getNum() << "!";
+        Totale = Totale + m_sommet[m_chemin[i+1]-1]->getPoidPred(m_chemin[i]-1);
+    }
+    //std::cout << "!" << m_num << "!";
+    Totale = Totale + m_sommet[m_chemin[0]-1]->getPoidPred(m_num);
+    return Totale;
+}
+
+int Sommet::getPoidPred(int num)
+{
+    for (unsigned int j = 0; j < m_succ.size() ; j++)
+    {
+        //std::cout << "#" << m_succ[j]->getNumSecond() << "#" << std::endl;
+        if(m_succ[j]->getNumSecond() == num)///A pas le bon chiffre
+        {
+            //std::cout << "#" << m_succ[j]->getPoid()<<"#";
+            return m_succ[j]->getPoid();
+        }
+    }
+}

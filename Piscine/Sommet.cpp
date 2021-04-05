@@ -12,6 +12,8 @@ void Sommet::afficherS()
     std::cout << "Sommet " << getNom() << " : ";
     for(unsigned int i = 0 ; i < m_succ.size() ; i++)
     {
-        std::cout << m_succ[i]->getNumSecond() << "(" << m_succ[i]->getPoid() << ")" <<" ";///AFFICHER LE POID A COTER DES SOMMETS EN SECONDE
+        std::cout<<std::endl;
+        std::cout << m_succ[i]->getNumSecond() << " ((Type : " << m_succ[i]->getType()<<  " // Poids : " << m_succ[i]->getPoid() << "))" <<" ";///AFFICHER LE POID A COTER DES SOMMETS EN SECONDE
     }
+    std::cout<<std::endl;
 }

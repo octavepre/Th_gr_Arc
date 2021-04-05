@@ -41,7 +41,7 @@ public:
     void afficherA();
     void calculPoid(int typeDescente);
     int getPoid()const{return m_poid;}
-
+    std::string getType() const {return m_type;}
 };
 
 #endif // SOMMET_H_INCLUDED

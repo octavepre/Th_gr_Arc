@@ -1,0 +1,24 @@
+#ifndef GRAPHE_H_INCLUDED
+#define GRAPHE_H_INCLUDED
+#include <vector>
+#include "Sommet.h"
+//#include "Arete.h"
+#include <fstream>
+#define DEFAULT 0
+
+class Graphe
+{
+private:
+    std::vector <Sommet*> m_sommets;
+    std::vector <Arete*> m_aretes;
+    int m_ordre;
+public:
+    Graphe(std::string nomFichier);
+    void afficher();
+
+    void setPoidDescente(int typeDescente);
+    void Dijkstra(int depart,int arriver);
+    bool AllTrue(std::vector <Sommet> listeChemin)const;
+};
+
+#endif // GRAPHE_H_INCLUDED

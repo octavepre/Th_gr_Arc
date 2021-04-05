@@ -1,0 +1,51 @@
+# depslib dependency file v1.0
+1617626350 source:c:\users\sacco\documents\piscine\main.cpp
+	<iostream>
+	"Graphe.h"
+	"Sommet.h"
+
+1617626969 source:c:\users\sacco\documents\piscine\graphe.cpp
+	"Graphe.h"
+
+1617626929 c:\users\sacco\documents\piscine\graphe.h
+	<vector>
+	"Sommet.h"
+	<fstream>
+
+1617626935 c:\users\sacco\documents\piscine\sommet.h
+	<iostream>
+	<vector>
+
+1617604212 c:\users\sacco\documents\piscine\arete.h
+	"Sommet.h"
+	<iostream>
+
+1617625626 source:c:\users\sacco\documents\piscine\arete.cpp
+	"Sommet.h"
+
+1617615060 source:c:\users\sacco\documents\piscine\sommet.cpp
+	"Sommet.h"
+
+1617625628 source:c:\users\octaveprevot\desktop\piscine\arete.cpp
+	"Sommet.h"
+
+1617626936 c:\users\octaveprevot\desktop\piscine\sommet.h
+	<iostream>
+	<vector>
+
+1617626970 source:c:\users\octaveprevot\desktop\piscine\graphe.cpp
+	"Graphe.h"
+
+1617626930 c:\users\octaveprevot\desktop\piscine\graphe.h
+	<vector>
+	"Sommet.h"
+	<fstream>
+
+1617626352 source:c:\users\octaveprevot\desktop\piscine\main.cpp
+	<iostream>
+	"Graphe.h"
+	"Sommet.h"
+
+1617615062 source:c:\users\octaveprevot\desktop\piscine\sommet.cpp
+	"Sommet.h"
+

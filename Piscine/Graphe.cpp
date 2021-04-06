@@ -78,15 +78,21 @@ void Graphe::Dijkstra(int depart,int arriver)
         for(unsigned int i = 0 ; i < m_sommets[current]->size_succ() ; i++)
         {
              int transition = m_sommets[current]->getSuccNum(i)-1;
+             int poid = m_sommets[current]->getPoid(i);
              //std::cout << "[" << m_sommets[transition]->getNum() << "]";
              ///Si le sommet n'a pas été visité on l'ajoute dans les chemins potentiel
             if(m_sommets[transition]->getVisite() == false && m_sommets[current]->getVisite() == false)
             {
                 Sommet preservationPred = *m_sommets[transition];
+                preservationPred.push_poidPred(poid);
                 preservationPred.push_pred(m_sommets[current]->getNum());
                 for (int i = 0; i < pivot.size_pred() ; i++)
                 {
-                    preservationPred.push_pred(pivot.GetPred(i));
+                    preservationPred.push_pred(pivot.GetPred(i));///il va le chercher dans m_chemin
+                }
+                for(unsigned int i = 0 ; i < pivot.size_poidPred() ; i++)
+                {
+                    preservationPred.push_poidPred(pivot.getPoidChemin(i));
                 }
                 listeChemin.push_back(preservationPred);
             }
@@ -108,6 +114,7 @@ void Graphe::Dijkstra(int depart,int arriver)
         setVisiteToTrueAll(listeChemin,current + 1);
         //std::cout << "Etape 3 faite:je passe ce qu'il faut en True" << std::endl;
 
+        ///METTRE LA LE POID DES ARRETE DANS LE CHEMIN
         for(int i = 0 ; i < listeChemin.size() ; i++)
         {
 
@@ -123,8 +130,8 @@ void Graphe::Dijkstra(int depart,int arriver)
         //std::cout << "Etape 4 faite:j'ai comparé les chemins et je prend le plus cours pas utilisé" << std::endl;
 
 
-        if(listeChemin.size() !=0 )
-            std::cout<< "{" <<pivot.getNum()<<"}"<<pivot.calculPoid(m_sommets)<<"|" << std::endl;
+        /*if(listeChemin.size() !=0 )
+            std::cout<< "{" <<pivot.getNum()<<"}"<<pivot.calculPoid(m_sommets)<<"|" << std::endl;*/
 
         if(pivot.getNum() == current + 1)
         {

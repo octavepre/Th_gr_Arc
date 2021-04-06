@@ -14,9 +14,10 @@ private:
     int m_altitude;
     std::vector <Arete*> m_succ;
     bool m_visite;
-
-    std::vector <int> m_chemin;///POUR DIJKSTRA
-    //std::vector <int> m_cheminArete;
+                        ///Num , Poid
+    std::vector <std::pair <int,int>> m_chemin2;///POUR DIJKSTRA
+    std::vector <int> m_PoidCheminArete;
+    std::vector <int> m_chemin;
 
 public:
     Sommet(int num,std::string nomLieu,int altitude);
@@ -35,8 +36,11 @@ public:
     int calculPoid(std::vector <Sommet*> m_sommet);
     int getPoidPred(int num);
     void afficherPred(std::vector <Sommet*> m_sommet,int arriver);
-    int getPoidPred2(int num, std::vector <int> &cheminA);
-
+    int getPoidPred2(int num, int poid);
+    void push_poidPred(int i){m_PoidCheminArete.push_back(i);}
+    int getPoid(int i)const;
+    int size_poidPred()const;
+    int getPoidChemin(int i)const;
 };
 
 class Arete

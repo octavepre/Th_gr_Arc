@@ -63,7 +63,6 @@ void Sommet::afficherPred(std::vector <Sommet*> m_sommet,int arriver)
     for (unsigned int i = 0; i < chemin.size() ; i++)
     {
         std::cout << m_sommet[chemin[i]-1]->getNum() << "--";
-
     }
     std::cout << m_sommet[arriver]->getNum() << std::endl << std::endl;
     ///rajouter l'arriver/////////////

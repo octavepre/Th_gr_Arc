@@ -113,7 +113,6 @@ void Graphe::Dijkstra(int depart,int arriver)
         ///ainsi que tout les chemin qui ont le meme numéro que lui
         setVisiteToTrueAll(listeChemin,current + 1);
         //std::cout << "Etape 3 faite:je passe ce qu'il faut en True" << std::endl;
-
         ///METTRE LA LE POID DES ARRETE DANS LE CHEMIN
         for(int i = 0 ; i < listeChemin.size() ; i++)
         {
@@ -130,8 +129,8 @@ void Graphe::Dijkstra(int depart,int arriver)
         //std::cout << "Etape 4 faite:j'ai comparé les chemins et je prend le plus cours pas utilisé" << std::endl;
 
 
-        /*if(listeChemin.size() !=0 )
-            std::cout<< "{" <<pivot.getNum()<<"}"<<pivot.calculPoid(m_sommets)<<"|" << std::endl;*/
+        if(listeChemin.size() !=0 )
+            std::cout << "{" <<pivot.getNum()<<"}"<<pivot.calculPoid(m_sommets)<<"|" << std::endl;
 
         if(pivot.getNum() == current + 1)
         {
@@ -170,8 +169,24 @@ void Graphe::Dijkstra(int depart,int arriver)
         std::cout << "Desoler il n'y y a pas de chemin possible pour aller a cette station." << std::endl;
     }else
     {
+        int compt = 0;
         std::cout << "Poid totale :" << pivot.calculPoid(m_sommets) << std::endl;
-        pivot.afficherPred(m_sommets,arriver);
+        //pivot.afficherPred(m_sommets,arriver);
+        std::vector <int> chemin = pivot.getChemin();
+        std::vector <int> cheminA;
+        std::reverse(chemin.begin(),chemin.end());
+        for (unsigned int i = 0; i < chemin.size()-1; i++)
+        {
+            std::cout << m_sommets[chemin[i]-1]->getNum() << " --> ";
+            std::cout << findTypeArreteMin(m_sommets[chemin[i]-1]->getNum(), m_sommets[chemin[i+1]-1]->getNum());
+            std::cout << " --> ";
+            //std::cout << "--" << compt << "--";
+            compt++;
+        }
+        std::cout << m_sommets[chemin[compt]-1]->getNum() << " --> " ;
+        std::cout << findTypeArreteMin(m_sommets[chemin[compt]-1]->getNum(), m_sommets[arriver]->getNum());
+        std::cout << " --> "<< m_sommets[arriver]->getNum()  ;
+        std::cout << std::endl << std::endl;
     }
 }
 
@@ -207,3 +222,31 @@ void Graphe::setVisiteToTrueAll(std::vector <Sommet>& listeChemin,int current)
 
     }
 }
+
+std::string Graphe::findTypeArreteMin(int SommetD, int SommetA)
+    {
+        std::vector<Arete*> cherche = m_aretes;
+        std::vector<Arete*> tri;
+        for(int i=0;i<cherche.size();i++)
+        {
+            if((cherche[i]->getNumFirst() == SommetD) && (cherche[i]->getNumSecond() == SommetA))
+            {
+                tri.push_back(cherche[i]);
+            }
+        }
+        int en_desordre = 1; // TRI A BULLE
+        while (en_desordre)
+        {
+            en_desordre = 0;
+            for (int j=0; j < tri.size()-1; j++)
+            {
+                if(tri[j]->getPoid() > tri[j+1]->getPoid())
+                {
+                    std::swap(tri[j+1], tri[j]);
+                    en_desordre = 1;
+                }
+            }
+        }
+        return tri[0]->getType();
+    }
+

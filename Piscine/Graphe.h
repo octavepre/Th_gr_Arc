@@ -20,6 +20,7 @@ public:
     void Dijkstra(int depart,int arriver);
     bool AllTrue(std::vector <Sommet> listeChemin)const;
     void setVisiteToTrueAll(std::vector <Sommet>& PleaseWork,int current);
+    std::string findTypeArreteMin(int SommetD, int SommetA);
 };
 
 #endif // GRAPHE_H_INCLUDED

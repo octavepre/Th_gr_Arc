@@ -41,6 +41,7 @@ public:
     int getPoid(int i)const;
     int size_poidPred()const;
     int getPoidChemin(int i)const;
+    std::vector <int> getChemin() const{return m_chemin;}
 };
 
 class Arete

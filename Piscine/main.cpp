@@ -38,7 +38,7 @@ void menu(Graphe& ski)
                 std::cin >> arriver;
             }while(depart < 1 || depart > 37 || arriver < 1 || arriver > 37 ||depart == arriver);
             system("cls");
-            ski.Dijkstra(depart,arriver);
+            ski.Dijkstra(depart-1,arriver-1);
             break;
         }
     case 2:

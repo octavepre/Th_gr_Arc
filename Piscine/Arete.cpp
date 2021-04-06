@@ -1,7 +1,7 @@
 #include "Sommet.h"
 
 Arete::Arete(int num,std::string nomTrajet,std::string type,Sommet* numero1,Sommet* numero2)
-    :m_num(num),m_trajet(nomTrajet),m_type(type)
+    :m_num(num),m_trajet(nomTrajet),m_type(type),m_utiliser(false)
     {
         m_lien = std::make_pair(numero1,numero2);
     }

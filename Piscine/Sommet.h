@@ -2,6 +2,7 @@
 #define SOMMET_H_INCLUDED
 #include <iostream>
 #include <vector>
+#include <algorithm>
 //#include "Arete.h"
 class Arete;
 
@@ -15,6 +16,7 @@ private:
     bool m_visite;
 
     std::vector <int> m_chemin;///POUR DIJKSTRA
+    //std::vector <int> m_cheminArete;
 
 public:
     Sommet(int num,std::string nomLieu,int altitude);
@@ -24,6 +26,16 @@ public:
     std::string getNom()const{return m_nomLieu;}
     int getAltitude()const{return m_altitude;}
     bool getVisite()const{return m_visite;}
+    int size_succ()const{return m_succ.size();}
+    int getSuccNum(int i);
+    int size_pred()const{return m_chemin.size();}
+    void push_pred(int i){m_chemin.push_back(i);}
+    int GetPred(int i){return m_chemin[i];}
+    void setVisiteToTrue(){m_visite = true;}
+    int calculPoid(std::vector <Sommet*> m_sommet);
+    int getPoidPred(int num);
+    void afficherPred(std::vector <Sommet*> m_sommet,int arriver);
+    int getPoidPred2(int num, std::vector <int> &cheminA);
 
 };
 
@@ -35,6 +47,7 @@ private:
     int m_poid;
     std::pair <Sommet*,Sommet*> m_lien;
     std::string m_type;
+    bool m_utiliser;
 public:
     Arete(int num,std::string nomTrajet,std::string type,Sommet* numero1,Sommet* numero2);
     int getNumSecond()const{return m_lien.second->getNum();}
@@ -42,6 +55,8 @@ public:
     void calculPoid(int typeDescente);
     int getPoid()const{return m_poid;}
     std::string getType() const {return m_type;}
+    int getNumFirst()const{return m_lien.first->getNum();}
+    int getNum()const{return m_num;}
 };
 
 #endif // SOMMET_H_INCLUDED

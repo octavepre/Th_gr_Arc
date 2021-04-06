@@ -30,9 +30,9 @@ public:
     void push_pred(int i){m_chemin.push_back(i);}
     int GetPred(int i){return m_chemin[i];}
     void setVisiteToTrue(){m_visite = true;}
-    int calculPoid(std::vector <Sommet*> m_sommet,int depart);
+    int calculPoid(std::vector <Sommet*> m_sommet);
     int getPoidPred(int num);
-
+    void afficherPred(std::vector <Sommet*> m_sommet);
 
 };
 
@@ -44,6 +44,7 @@ private:
     int m_poid;
     std::pair <Sommet*,Sommet*> m_lien;
     std::string m_type;
+    bool m_utiliser;
 public:
     Arete(int num,std::string nomTrajet,std::string type,Sommet* numero1,Sommet* numero2);
     int getNumSecond()const{return m_lien.second->getNum();}

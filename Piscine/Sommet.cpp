@@ -24,7 +24,7 @@ int Sommet::getSuccNum(int i)
 }
 
 ///COMPLETEMENT BUGUER
-int Sommet::calculPoid(std::vector <Sommet*> m_sommet,int depart)
+int Sommet::calculPoid(std::vector <Sommet*> m_sommet)
 {
 
     int Totale = 0;
@@ -49,5 +49,13 @@ int Sommet::getPoidPred(int num)
             //std::cout << "#" << m_succ[j]->getPoid()<<"#";
             return m_succ[j]->getPoid();
         }
+    }
+}
+void Sommet::afficherPred(std::vector <Sommet*> m_sommet)
+{
+    //std::cout << "|" << m_chemin.size()<< "|" ;
+    for (unsigned int i = m_chemin.size(); i > 0 ; i--)
+    {
+        std::cout << m_sommet[m_chemin[i]-1]->getNom() << "--";
     }
 }

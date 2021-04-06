@@ -188,6 +188,7 @@ bool Graphe::AllTrue(std::vector <Sommet> listeChemin)const ///LE PROBLEME VIEN 
         return false;
     }
 }
+
 void Graphe::setVisiteToTrueAll(std::vector <Sommet>& listeChemin,int current)
 {
     for(unsigned int i = 0; i < listeChemin.size() ; i++)

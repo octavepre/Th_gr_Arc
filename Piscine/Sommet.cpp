@@ -32,10 +32,13 @@ int Sommet::calculPoid(std::vector <Sommet*> m_sommet)
     for (int i = 0 ; i < m_chemin.size()-1 ; i++)
     {
         //std::cout << "!" << m_sommet[m_chemin[i+1]-1]->getNum() << "!";
-        Totale = Totale + m_sommet[m_chemin[i+1]-1]->getPoidPred(m_chemin[i]-1);
+        Totale = Totale + m_sommet[m_chemin[i+1]-1]->getPoidPred(m_chemin[i]);
+        //std::cout << "she" << m_sommet[m_chemin[i+1]-1]->getPoidPred(m_chemin[i]) << "she" << std::endl;
+        //std::cout << Totale;
     }
     //std::cout << "!" << m_num << "!";
     Totale = Totale + m_sommet[m_chemin[0]-1]->getPoidPred(m_num);
+    //std::cout << Totale;
     return Totale;
 }
 
@@ -44,18 +47,44 @@ int Sommet::getPoidPred(int num)
     for (unsigned int j = 0; j < m_succ.size() ; j++)
     {
         //std::cout << "#" << m_succ[j]->getNumSecond() << "#" << std::endl;
-        if(m_succ[j]->getNumSecond() == num)///A pas le bon chiffre
+        if(m_succ[j]->getNumSecond() == num)
         {
             //std::cout << "#" << m_succ[j]->getPoid()<<"#";
             return m_succ[j]->getPoid();
         }
     }
 }
-void Sommet::afficherPred(std::vector <Sommet*> m_sommet)
+void Sommet::afficherPred(std::vector <Sommet*> m_sommet,int arriver)
 {
-    //std::cout << "|" << m_chemin.size()<< "|" ;
-    for (unsigned int i = m_chemin.size(); i > 0 ; i--)
+    std::vector <int> chemin = m_chemin;
+    std::vector <int> cheminA;
+    std::reverse(chemin.begin(),chemin.end());
+    for (unsigned int i = 0; i < chemin.size() ; i++)
     {
-        std::cout << m_sommet[m_chemin[i]-1]->getNom() << "--";
+        std::cout << m_sommet[chemin[i]-1]->getNum() << "--";
+
+    }
+    std::cout << m_sommet[arriver]->getNum();
+    ///rajouter l'arriver/////////////
+
+    /*int Totale = 0;
+    for (int i = 0 ; i < m_chemin.size()-1 ; i++)
+    {
+    std::cout << m_sommet[m_chemin[i+1]-1]->getPoidPred2(m_chemin[i],cheminA) << " + ";
+    }
+    std::cout << m_sommet[m_chemin[0]-1]->getPoidPred(m_num);
+    std::cout << std::endl << std::endl << chemin.size() << cheminA.size();*/
+}
+
+int Sommet::getPoidPred2(int num,std::vector <int> &cheminA)
+{
+    for (unsigned int j = 0; j < m_succ.size() ; j++)
+    {
+        //std::cout << "#" << m_succ[j]->getNumSecond() << "#" << std::endl;
+        if(m_succ[j]->getNumSecond() == num)
+        {
+            cheminA.push_back(m_succ[j]->getNum());
+            return m_succ[j]->getPoid();
+        }
     }
 }

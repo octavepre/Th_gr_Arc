@@ -2,6 +2,7 @@
 #define SOMMET_H_INCLUDED
 #include <iostream>
 #include <vector>
+#include <algorithm>
 //#include "Arete.h"
 class Arete;
 
@@ -15,6 +16,7 @@ private:
     bool m_visite;
 
     std::vector <int> m_chemin;///POUR DIJKSTRA
+    //std::vector <int> m_cheminArete;
 
 public:
     Sommet(int num,std::string nomLieu,int altitude);
@@ -32,7 +34,8 @@ public:
     void setVisiteToTrue(){m_visite = true;}
     int calculPoid(std::vector <Sommet*> m_sommet);
     int getPoidPred(int num);
-    void afficherPred(std::vector <Sommet*> m_sommet);
+    void afficherPred(std::vector <Sommet*> m_sommet,int arriver);
+    int getPoidPred2(int num, std::vector <int> &cheminA);
 
 };
 
@@ -53,7 +56,7 @@ public:
     int getPoid()const{return m_poid;}
     std::string getType() const {return m_type;}
     int getNumFirst()const{return m_lien.first->getNum();}
-
+    int getNum()const{return m_num;}
 };
 
 #endif // SOMMET_H_INCLUDED

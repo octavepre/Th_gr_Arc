@@ -75,11 +75,12 @@
 1617706554 source:c:\users\sacco\desktop\piscine\th_gr_arc\piscine\arete.cpp
 	"Sommet.h"
 
-1617706554 c:\users\sacco\desktop\piscine\th_gr_arc\piscine\sommet.h
+1617716297 c:\users\sacco\desktop\piscine\th_gr_arc\piscine\sommet.h
 	<iostream>
 	<vector>
+	<algorithm>
 
-1617707379 source:c:\users\sacco\desktop\piscine\th_gr_arc\piscine\graphe.cpp
+1617716297 source:c:\users\sacco\desktop\piscine\th_gr_arc\piscine\graphe.cpp
 	"Graphe.h"
 
 1617703909 c:\users\sacco\desktop\piscine\th_gr_arc\piscine\graphe.h
@@ -92,6 +93,6 @@
 	"Graphe.h"
 	"Sommet.h"
 
-1617707294 source:c:\users\sacco\desktop\piscine\th_gr_arc\piscine\sommet.cpp
+1617716297 source:c:\users\sacco\desktop\piscine\th_gr_arc\piscine\sommet.cpp
 	"Sommet.h"
 

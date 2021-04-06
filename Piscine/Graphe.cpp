@@ -123,8 +123,8 @@ void Graphe::Dijkstra(int depart,int arriver)
         //std::cout << "Etape 4 faite:j'ai comparé les chemins et je prend le plus cours pas utilisé" << std::endl;
 
 
-        /*if(listeChemin.size() !=0 )
-            std::cout<< "{" <<pivot.getNum()<<"}"<<pivot.calculPoid(m_sommets)<<"|" << std::endl;*/
+        if(listeChemin.size() !=0 )
+            std::cout<< "{" <<pivot.getNum()<<"}"<<pivot.calculPoid(m_sommets)<<"|" << std::endl;
 
         if(pivot.getNum() == current + 1)
         {
@@ -164,7 +164,7 @@ void Graphe::Dijkstra(int depart,int arriver)
     }else
     {
         std::cout << "Poid totale :" << pivot.calculPoid(m_sommets) << std::endl;
-        pivot.afficherPred(m_sommets);
+        pivot.afficherPred(m_sommets,arriver);
     }
 }
 

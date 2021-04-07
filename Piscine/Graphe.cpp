@@ -71,7 +71,7 @@ void Graphe::Dijkstra(int depart,int arriver)
     int compteur=1;
     //std::cout << "[" << m_sommets[depart]->getNum() << "," << m_sommets[arriver]->getNum() << "]";
     //std::cout << "[" << pivot.getNum() <<"]";
-    while(AllTrue(listeChemin) == false && m_sommets[current]->getNum() != arriver+1)
+    while(AllTrue(listeChemin) == false /*&& m_sommets[current]->getNum() != arriver+1*/)
     {
         //std::cout << "Etape 1 faite:je rentre" << std::endl;
         ///On ajoute les sortants(successeurs) du chemin actuel dans les nouveaux chemin possible
@@ -129,8 +129,8 @@ void Graphe::Dijkstra(int depart,int arriver)
         //std::cout << "Etape 4 faite:j'ai comparé les chemins et je prend le plus cours pas utilisé" << std::endl;
 
 
-        if(listeChemin.size() !=0 )
-            std::cout << "{" <<pivot.getNum()<<"}"<<pivot.calculPoid(m_sommets)<<"|" << std::endl;
+        /*if(listeChemin.size() !=0 )
+            std::cout << "{" <<pivot.getNum()<<"}"<<pivot.calculPoid(m_sommets)<<"|" << std::endl;*/
 
         if(pivot.getNum() == current + 1)
         {
@@ -170,10 +170,10 @@ void Graphe::Dijkstra(int depart,int arriver)
     }else
     {
         int compt = 0;
-        std::cout << "Poid totale :" << pivot.calculPoid(m_sommets) << std::endl;
+        float minute = pivot.calculPoid(m_sommets);
+        std::cout << "Temps totale en minutes :" << (minute)/100/60 << std::endl;
         //pivot.afficherPred(m_sommets,arriver);
         std::vector <int> chemin = pivot.getChemin();
-        std::vector <int> cheminA;
         std::reverse(chemin.begin(),chemin.end());
         for (unsigned int i = 0; i < chemin.size()-1; i++)
         {
@@ -190,7 +190,7 @@ void Graphe::Dijkstra(int depart,int arriver)
     }
 }
 
-bool Graphe::AllTrue(std::vector <Sommet> listeChemin)const ///LE PROBLEME VIEN DE LA
+bool Graphe::AllTrue(std::vector <Sommet> listeChemin)const
 {
 
     int compteur = 0;

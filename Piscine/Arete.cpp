@@ -13,7 +13,7 @@ void Arete::afficherA()
 
 ///Pas besoin de type descente
 void Arete::calculPoid(int typeDescente)///A diviser par 100 le poid
-{
+{///rajouter un switch
     if (m_type == "V")///Verte
     {
         m_poid = (m_lien.first->getAltitude() - m_lien.second->getAltitude())*(5*60);///300s = 5 mn
@@ -41,10 +41,10 @@ void Arete::calculPoid(int typeDescente)///A diviser par 100 le poid
         m_poid = 1*60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(3*60);
     }else if (m_type == "TS")///Telesiege
     {
-        m_poid = 2*60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(4*60);
+        m_poid = 1*60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(4*60);
     }else if (m_type == "TK")///Teleski
     {
-        m_poid = 60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(4*60);
+        m_poid = 1*60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(4*60);
     }else if (m_type == "BUS")///Bus
     {
         //std::cout << "{" << m_lien.first->getNum() << "}";

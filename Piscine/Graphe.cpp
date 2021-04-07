@@ -129,9 +129,9 @@ void Graphe::Dijkstra(int depart,int arriver)
         //std::cout << "Etape 4 faite:j'ai comparé les chemins et je prend le plus cours pas utilisé" << std::endl;
 
 
-        if(listeChemin.size() !=0 )
+        /*if(listeChemin.size() !=0 )
             std::cout << "{" <<pivot.getNum()<<"}"<<pivot.calculPoid(m_sommets)<<"|" << std::endl;
-
+*/
         if(pivot.getNum() == current + 1)
         {
             for(int i = 0 ; i < listeChemin.size() ; i++)
@@ -148,12 +148,12 @@ void Graphe::Dijkstra(int depart,int arriver)
 
 
         ///TESTE/////////////////////////////////////////////////////////////////////////////////////////////////
-        /*for (unsigned int i = 0 ; i < listeChemin.size() ; i++)
+        for (unsigned int i = 0 ; i < listeChemin.size() ; i++)
         {
             std::cout << listeChemin[i].getNum() <<std::endl;
         }
         //std::cout << "Etape 6 wtf" << std::endl;
-        std::cout <<std::endl<<std::endl;*/
+        std::cout <<std::endl<<std::endl;
 
     }
     ///Pour aller trouver le bon dans tout ceux qu'on a vu

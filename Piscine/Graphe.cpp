@@ -1,5 +1,14 @@
 #include "Graphe.h"
 
+void questionnaire()
+{
+    std::cout << std::endl;
+    std::cout << "1. Pas Empreintable" << std::endl;
+    std::cout << "2. Je n'aime pas" << std::endl;
+    std::cout << "3. Pas d'avis/neutre" << std::endl;
+    std::cout << "4. J'aime" << std::endl;
+    std::cout << "5. J'adore !/C'est ce que je cherche !" << std::endl;
+}
 
 Graphe::Graphe(std::string nomFichier)
 {
@@ -50,13 +59,58 @@ void Graphe::setPoidDescente(int typeDescente)
     switch (typeDescente)
     {
     case 0:
+    {
+        for(unsigned int i = 0 ; i < m_aretes.size() ; i++)
         {
-            for(unsigned int i = 0 ; i < m_aretes.size() ; i++)
-            {
-                m_aretes[i]->calculPoid(typeDescente);
-            }
-            break;
+            m_aretes[i]->calculPoid(typeDescente);
         }
+        break;
+    }
+    case 1:
+    {
+        for (int i = 0 ; i < 12; i++)
+        {
+            system("cls");
+            int P = 0;
+            if(i==0)
+                std::cout << "Aimez vous les pistes verte ?" << std::endl;
+            if(i==1)
+                std::cout << "Aimez vous les pistes bleu ?" << std::endl;
+            if(i==2)
+                std::cout << "Aimez vous les pistes rouge ?" << std::endl;
+            if(i==3)
+                std::cout << "Aimez vous les pistes noir ?" << std::endl;
+            if(i==4)
+                std::cout << "Aimez vous les pistes de kilometre lance ?" << std::endl;
+            if(i==5)
+                std::cout << "Aimez vous les snowpark ?" << std::endl;
+            if(i==6)
+                std::cout << "Aimez vous les telepherique ?" << std::endl;
+            if(i==7)
+                std::cout << "Aimez vous les telecabine ?" << std::endl;
+            if(i==8)
+                std::cout << "Aimez vous les telesiege debrayable ?" << std::endl;
+            if(i==9)
+                std::cout << "Aimez vous les telesiege ?" << std::endl;
+            if(i==10)
+                std::cout << "Aimez vous les teleski ?" << std::endl;
+            if(i==11)
+                std::cout << "Aimez vous prendre le bus ?" << std::endl;
+
+            questionnaire();
+            do
+            {
+                std::cin >> P;
+            }
+            while (P < 1 || P > 5);
+
+            for (unsigned int j = 0 ; j < m_aretes.size() ; j++)
+            {
+                m_aretes[j]->calculPoid2(P);
+            }
+        }
+        break;
+    }
     }
 }
 
@@ -73,14 +127,13 @@ void Graphe::Dijkstra(int depart,int arriver)
     //std::cout << "[" << pivot.getNum() <<"]";
     while(AllTrue(listeChemin) == false /*&& m_sommets[current]->getNum() != arriver+1*/)
     {
-        //std::cout << "Etape 1 faite:je rentre" << std::endl;
         ///On ajoute les sortants(successeurs) du chemin actuel dans les nouveaux chemin possible
         for(unsigned int i = 0 ; i < m_sommets[current]->size_succ() ; i++)
         {
-             int transition = m_sommets[current]->getSuccNum(i)-1;
-             int poid = m_sommets[current]->getPoid(i);
-             //std::cout << "[" << m_sommets[transition]->getNum() << "]";
-             ///Si le sommet n'a pas été visité on l'ajoute dans les chemins potentiel
+            int transition = m_sommets[current]->getSuccNum(i)-1;
+            int poid = m_sommets[current]->getPoid(i);
+            //std::cout << "[" << m_sommets[transition]->getNum() << "]";
+            ///Si le sommet n'a pas été visité on l'ajoute dans les chemins potentiel
             if(m_sommets[transition]->getVisite() == false && m_sommets[current]->getVisite() == false)
             {
                 Sommet preservationPred = *m_sommets[transition];
@@ -97,7 +150,6 @@ void Graphe::Dijkstra(int depart,int arriver)
                 listeChemin.push_back(preservationPred);
             }
         }
-        //std::cout << "Etape 2 faite:je'accede au succ" << std::endl;
         ///permet de ne pas comparé une distance de 0 avec le reste
         ///on enleve le sommet de départ juste apres avoir ajouter ces successeurs
         if (compteur == 1)
@@ -112,7 +164,6 @@ void Graphe::Dijkstra(int depart,int arriver)
         m_sommets[current]->setVisiteToTrue();
         ///ainsi que tout les chemin qui ont le meme numéro que lui
         setVisiteToTrueAll(listeChemin,current + 1);
-        //std::cout << "Etape 3 faite:je passe ce qu'il faut en True" << std::endl;
         ///METTRE LA LE POID DES ARRETE DANS LE CHEMIN
         for(int i = 0 ; i < listeChemin.size() ; i++)
         {
@@ -126,12 +177,8 @@ void Graphe::Dijkstra(int depart,int arriver)
                 pivot = listeChemin[i];
             }
         }
-        //std::cout << "Etape 4 faite:j'ai comparé les chemins et je prend le plus cours pas utilisé" << std::endl;
-
-
         /*if(listeChemin.size() !=0 )
             std::cout << "{" <<pivot.getNum()<<"}"<<pivot.calculPoid(m_sommets)<<"|" << std::endl;*/
-
         if(pivot.getNum() == current + 1)
         {
             for(int i = 0 ; i < listeChemin.size() ; i++)
@@ -142,7 +189,7 @@ void Graphe::Dijkstra(int depart,int arriver)
                 }
             }
         }
-         //std::cout << "Etape 5 faite:peut etre ai'je ete dans un cul de sac et j'en sors peut etre en changenat de sommet" << std::endl;
+        //std::cout << "Etape 5 faite:peut etre ai'je ete dans un cul de sac et j'en sors peut etre en changenat de sommet" << std::endl;
         ///on change le numero du current qui est le numero du sommet qui est entrain d'etre utilisé
         current = pivot.getNum()-1;
 
@@ -160,14 +207,15 @@ void Graphe::Dijkstra(int depart,int arriver)
     for(int i = 0;  i < listeChemin.size() ; i++)
     {
         if(pivot.calculPoid(m_sommets) > listeChemin[i].calculPoid(m_sommets) && listeChemin[i].getNum() == m_sommets[arriver]->getNum())
-            {
-                pivot = listeChemin[i];
-            }
+        {
+            pivot = listeChemin[i];
+        }
     }
     if(pivot.getNum() != arriver + 1)
     {
         std::cout << "Desoler il n'y y a pas de chemin possible pour aller a cette station." << std::endl;
-    }else
+    }
+    else
     {
         int compt = 0;
         float minute = pivot.calculPoid(m_sommets);
@@ -224,29 +272,29 @@ void Graphe::setVisiteToTrueAll(std::vector <Sommet>& listeChemin,int current)
 }
 
 std::string Graphe::findTypeArreteMin(int SommetD, int SommetA)
+{
+    std::vector<Arete*> cherche = m_aretes;
+    std::vector<Arete*> tri;
+    for(int i=0; i<cherche.size(); i++)
     {
-        std::vector<Arete*> cherche = m_aretes;
-        std::vector<Arete*> tri;
-        for(int i=0;i<cherche.size();i++)
+        if((cherche[i]->getNumFirst() == SommetD) && (cherche[i]->getNumSecond() == SommetA))
         {
-            if((cherche[i]->getNumFirst() == SommetD) && (cherche[i]->getNumSecond() == SommetA))
-            {
-                tri.push_back(cherche[i]);
-            }
+            tri.push_back(cherche[i]);
         }
-        int en_desordre = 1; // TRI A BULLE
-        while (en_desordre)
-        {
-            en_desordre = 0;
-            for (int j=0; j < tri.size()-1; j++)
-            {
-                if(tri[j]->getPoid() > tri[j+1]->getPoid())
-                {
-                    std::swap(tri[j+1], tri[j]);
-                    en_desordre = 1;
-                }
-            }
-        }
-        return tri[0]->getType();
     }
+    int en_desordre = 1; // TRI A BULLE
+    while (en_desordre)
+    {
+        en_desordre = 0;
+        for (int j=0; j < tri.size()-1; j++)
+        {
+            if(tri[j]->getPoid() > tri[j+1]->getPoid())
+            {
+                std::swap(tri[j+1], tri[j]);
+                en_desordre = 1;
+            }
+        }
+    }
+    return tri[0]->getType();
+}
 

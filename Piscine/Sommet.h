@@ -62,6 +62,7 @@ public:
     std::string getType() const {return m_type;}
     int getNumFirst()const{return m_lien.first->getNum();}
     int getNum()const{return m_num;}
+    void calculPoid2(int P);
 };
 
 #endif // SOMMET_H_INCLUDED

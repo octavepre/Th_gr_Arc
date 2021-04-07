@@ -44,7 +44,22 @@ void menu(Graphe& ski)
     case 2:
         {
             system("cls");
-            std::cout << "En construction";
+            std::cout << "Veuillez repondre a ce questionniare." << std::endl;
+            //std::cout << std::endl << "Appuyer sur une touche pour continuer...";
+            system("pause");
+            ski.setPoidDescente (1);
+            //system("cls");
+            int depart=0,arriver=0;
+            do
+            {
+                system("cls");
+                std::cout << "Dans quel station etes vous ?" << std::endl;
+                std::cin >> depart;
+                std::cout << "Dans quel station souhaitez vous vous rendre ?" << std::endl;
+                std::cin >> arriver;
+            }while(depart < 1 || depart > 37 || arriver < 1 || arriver > 37 ||depart == arriver);
+            system("cls");
+            ski.Dijkstra(depart-1,arriver-1);
             break;
         }
     case 3:

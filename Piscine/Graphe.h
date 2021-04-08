@@ -1,6 +1,7 @@
 #ifndef GRAPHE_H_INCLUDED
 #define GRAPHE_H_INCLUDED
 #include <vector>
+#include <queue>
 #include "Sommet.h"
 //#include "Arete.h"
 #include <fstream>
@@ -18,6 +19,7 @@ public:
 
     void setPoidDescente(int typeDescente);
     void Dijkstra(int depart,int arriver);
+    void BFS(int S0);
     bool AllTrue(std::vector <Sommet> listeChemin)const;
     void setVisiteToTrueAll(std::vector <Sommet>& PleaseWork,int current);
     /*std::string findTypeArreteMin(int SommetD, int SommetA, int poids);

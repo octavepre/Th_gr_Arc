@@ -243,6 +243,47 @@ void Graphe::Dijkstra(int depart,int arriver)
     }
 }
 
+void Graphe::BFS(int S0)
+{
+
+    std::queue<Sommet*>fil; //declaration Premiere file
+    std::queue<Sommet*>fifi; // declaration Deuxieme file pour stocker les predecesseur de chaque terme de la premiere
+    Sommet* sommet_b = m_sommets[S0]; // initialisation Sommet initial
+    fil.push(sommet_b); // Enfilage du Premier sommet
+    fifi.push(sommet_b); //Enfilage du Premier sommet
+    sommet_b->setState(1); // On grise le premier sommet
+    while(fil.size()!=0) // Tant que la file est non nulle
+    {
+        Sommet* s = fil.front();// On affecte au pointeur de sommet s la valeur du la premiere valaur de la file pour pouvoir le manipuler
+        //std::vector<Sommet*>Suc = m_sommets[s->getSuccNum()]; // On recupeur les successeur de s
+        for(unsigned int i = 0 ; i < m_sommets[s->getNum()-1]->size_succ() ; i++)
+        {
+            int transition = m_sommets[s->getNum()-1]->getSuccNum(i)-1;
+            if(m_sommets[transition]->getState()==0) // On verifie que ces sommets n'aient pas été deja parcouru
+            {
+                fil.push(m_sommets[transition]); //On enfile j (successeur de s)
+                fifi.push(m_sommets[transition]); //On enfile j (successeur de s) dans la 2eme file
+                m_sommets[transition]->setState(1); // On grise j
+                m_sommets[transition]->setPrede(s); // On Transmets les predecesseur de s en tant que predecesseur de j et on ajoute s au predecesseur de j
+            }
+        }
+        s->setState(2); // On noircit s
+        fil.pop(); // on supprime le Premiere element de la file
+    }
+    while(fifi.size() != 0) // Tant que la file d'affichage n'est pas vode
+    {
+        //Boucle d'affichage dans l'ordre de decouverte des sommets
+        std::cout<< fifi.front()->getNum(); // On affiche la file complete du BFS avec l'ordre d'apparition
+        std::vector<Sommet*> Pred = fifi.front()->getPrede();
+        for(size_t i(0); i<Pred.size();i++)
+        {
+            std::cout << "<--" <<Pred[i]->getNum();// On affiche le predec predecesseur du sommet Pred[i]; Le i-eme numero du BFS
+        }
+        std::cout <<std::endl;
+        fifi.pop(); //On defile le premier sommet pour passer au suivant
+    }
+}
+
 bool Graphe::AllTrue(std::vector <Sommet> listeChemin)const
 {
 

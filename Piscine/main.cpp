@@ -9,9 +9,10 @@ void menu(Graphe& ski)
     std::cout << "SUPER TRAVELLER 3000"<<std::endl;
     std::cout << "Vous aide a vous trouvez le meilleur chemin selon VOTRE niveau" << std::endl;
     std::cout << "0. Afficher toute les stations" <<std::endl;
-    std::cout << "1. Chercher un itineraire" <<std::endl;
-    std::cout << "2. Determiner un chemin adapter a votre niveau" <<std::endl;
-    std::cout << "3. Sheeeeeeeeeeee" <<std::endl;
+    std::cout << "1. Chercher l'itineraire le plus rapide" <<std::endl;
+    std::cout << "2. Chercher l'itineraire le plus court" <<std::endl;
+    std::cout << "3. Determiner un chemin adapter a votre niveau" <<std::endl;
+    std::cout << "4. Sheeeeeeeeeeee" <<std::endl;
     do
     {
         std::cin >> menu;
@@ -43,6 +44,19 @@ void menu(Graphe& ski)
         }
     case 2:
         {
+            int depart=0,arriver=0;
+            do
+            {
+                system("cls");
+                std::cout << "Dans quel station etes vous ?" << std::endl;
+                std::cin >> depart;
+            }while(depart < 1 || depart > 37);
+            system("cls");
+            ski.BFS(depart-1);
+            break;
+        }
+    case 3:
+        {
             system("cls");
             std::cout << "Veuillez repondre a ce questionniare." << std::endl;
             //std::cout << std::endl << "Appuyer sur une touche pour continuer...";
@@ -62,7 +76,7 @@ void menu(Graphe& ski)
             ski.Dijkstra(depart-1,arriver-1);
             break;
         }
-    case 3:
+    case 4:
         {
             system("cls");
             std::cout << "SHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";

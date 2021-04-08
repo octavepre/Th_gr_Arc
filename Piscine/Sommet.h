@@ -19,12 +19,16 @@ private:
     std::vector <int> m_PoidCheminArete;
     std::vector <int> m_chemin;
     std::vector <int> m_cheminArete;
+    int m_state;
+    std::vector<Sommet*>m_predecesseur;
 
 public:
     Sommet(int num,std::string nomLieu,int altitude);
     int getNum()const{return m_num;}
     void addSucc(Arete* succ);
     void afficherS();
+    void setState(int statue){m_state = statue;}
+    int getState()const {return m_state;}
     std::string getNom()const{return m_nomLieu;}
     int getAltitude()const{return m_altitude;}
     bool getVisite()const{return m_visite;}
@@ -48,6 +52,8 @@ public:
     void push_numArete(int numArete){m_cheminArete.push_back(numArete);}
     int size_predArete(){return m_cheminArete.size();}
     int getPredArete(int i){return m_cheminArete[i];}
+    void setPrede(Sommet* b);
+    std::vector<Sommet*> getPrede()const{return m_predecesseur;}
 };
 
 class Arete

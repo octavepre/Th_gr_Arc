@@ -1,6 +1,6 @@
 #include "Sommet.h"
 
-Sommet::Sommet(int num,std::string nomLieu,int altitude):m_num(num),m_nomLieu(nomLieu),m_altitude(altitude),m_visite(false){}
+Sommet::Sommet(int num,std::string nomLieu,int altitude):m_num(num),m_nomLieu(nomLieu),m_altitude(altitude),m_visite(false),m_state(0){}
 
 void Sommet::addSucc(Arete* succ)
 {
@@ -71,6 +71,15 @@ void Sommet::afficherPred(std::vector <Sommet*> m_sommet,std::vector <Arete*> m_
         std::cout << "|" << m_aretes[m_cheminArete[i]-1]->getType() << "|{" << m_aretes[m_cheminArete[i]-1]->getNom() << "} ";
         std::cout << m_sommet[m_chemin[i]-1]->getNum();
         }
+    }
+}
+
+void Sommet::setPrede(Sommet* b)
+{
+    m_predecesseur.push_back(b);
+    for(size_t i(0); i < (b->getPrede().size()); i++)
+    {
+        m_predecesseur.push_back(b->getPrede()[i]);
     }
 }
 

@@ -33,50 +33,48 @@ int Sommet::calculPoid(std::vector <Sommet*> m_sommet)
     {
         //std::cout << "!" << m_sommet[m_chemin[i+1]-1]->getNum() << "!";
         //std::cout << m_PoidCheminArete.size() << std::endl;
-        Totale = Totale + m_sommet[m_chemin[i+1]-1]->getPoidPred2(m_chemin[i],m_PoidCheminArete[i+1]);
+
+        //Totale = Totale + m_sommet[m_chemin[i+1]-1]->getPoidPred2(m_chemin[i],m_PoidCheminArete[i+1]);
+        Totale = Totale + m_sommet[m_chemin[i+1]-1]->getPoidPred(m_chemin[i],m_cheminArete[i+1]);
+
         //std::cout << "she" << m_sommet[m_chemin[i+1]-1]->getPoidPred2(m_chemin[i],m_PoidCheminArete[i+1]) << "she" << std::endl;
         //std::cout << Totale;
     }
     //std::cout << "!" << m_num << "!";
-    Totale = Totale + m_sommet[m_chemin[0]-1]->getPoidPred2(m_num,m_PoidCheminArete[0]);
+    Totale = Totale + m_sommet[m_chemin[0]-1]->getPoidPred(m_num,m_cheminArete[0]);
     //std::cout << Totale;
     return Totale;
 }
 
-int Sommet::getPoidPred(int num)
+int Sommet::getPoidPred(int num,int numArete)
 {
     for (unsigned int j = 0; j < m_succ.size() ; j++)
     {
         //std::cout << "#" << m_succ[j]->getNumSecond() << "#" << std::endl;
-        if(m_succ[j]->getNumSecond() == num)
+        if(m_succ[j]->getNumSecond() == num && m_succ[j]->getNum() == numArete)
         {
             //std::cout << "#" << m_succ[j]->getPoid()<<"#";
             return m_succ[j]->getPoid();
         }
     }
 }
-void Sommet::afficherPred(std::vector <Sommet*> m_sommet,int arriver)
+void Sommet::afficherPred(std::vector <Sommet*> m_sommet,std::vector <Arete*> m_aretes)
 {
-    std::vector <int> chemin = m_chemin;
-    std::vector <int> cheminA;
-    std::reverse(chemin.begin(),chemin.end());
-    for (unsigned int i = 0; i < chemin.size() ; i++)
+    std::cout << getNum() << "<---";
+    for(unsigned int i = 0; i <m_chemin.size() ; i++)
     {
-        std::cout << m_sommet[chemin[i]-1]->getNum() << "--";
+        if(i<m_chemin.size()-2){
+        std::cout << "|" << m_aretes[m_cheminArete[i]-1]->getType() << "|{" << m_aretes[m_cheminArete[i]-1]->getNom() << "} ";
+        std::cout << m_sommet[m_chemin[i]-1]->getNum();
+        std::cout << "<---";}
+        if(i==m_chemin.size()-1){
+        std::cout << "|" << m_aretes[m_cheminArete[i]-1]->getType() << "|{" << m_aretes[m_cheminArete[i]-1]->getNom() << "} ";
+        std::cout << m_sommet[m_chemin[i]-1]->getNum();
+        }
     }
-    std::cout << m_sommet[arriver]->getNum() << std::endl << std::endl;
-    ///rajouter l'arriver/////////////
-
-    /*int Totale = 0;
-    for (int i = 0 ; i < m_chemin.size()-1 ; i++)
-    {
-    std::cout << m_sommet[m_chemin[i+1]-1]->getPoidPred2(m_chemin[i],cheminA) << " + ";
-    }
-    std::cout << m_sommet[m_chemin[0]-1]->getPoidPred(m_num);
-    std::cout << std::endl << std::endl << chemin.size() << cheminA.size();*/
 }
 
-int Sommet::getPoidPred2(int num,int poid)
+/*int Sommet::getPoidPred2(int num,int poid)
 {
     for (unsigned int j = 0; j < m_succ.size() ; j++)
     {
@@ -87,8 +85,9 @@ int Sommet::getPoidPred2(int num,int poid)
             return m_succ[j]->getPoid();
         }
     }
-}
+}*/
 
 int Sommet::getPoid(int i)const{return m_succ[i]->getPoid();}
 int Sommet::size_poidPred()const{return m_PoidCheminArete.size();}
 int Sommet::getPoidChemin(int i)const{return m_PoidCheminArete[i];}
+int Sommet::getNumArete(int i)const{return m_succ[i]->getNum();}

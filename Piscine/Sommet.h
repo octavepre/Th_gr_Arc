@@ -18,6 +18,7 @@ private:
     std::vector <std::pair <int,int>> m_chemin2;///POUR DIJKSTRA
     std::vector <int> m_PoidCheminArete;
     std::vector <int> m_chemin;
+    std::vector <int> m_cheminArete;
 
 public:
     Sommet(int num,std::string nomLieu,int altitude);
@@ -34,15 +35,19 @@ public:
     int GetPred(int i){return m_chemin[i];}
     void setVisiteToTrue(){m_visite = true;}
     int calculPoid(std::vector <Sommet*> m_sommet);
-    int getPoidPred(int num);
-    void afficherPred(std::vector <Sommet*> m_sommet,int arriver);
-    int getPoidPred2(int num, int poid);
+    int getPoidPred(int num,int numArete);
+    void afficherPred(std::vector <Sommet*> m_sommet,std::vector <Arete*> m_aretes);
+    //int getPoidPred2(int num, int poid);
     void push_poidPred(int i){m_PoidCheminArete.push_back(i);}
     int getPoid(int i)const;
     int size_poidPred()const;
     int getPoidChemin(int i)const;
     std::vector <int> getChemin() const{return m_chemin;}
     std::vector <int> getCheminArete() const {return m_PoidCheminArete;}
+    int getNumArete(int i)const;
+    void push_numArete(int numArete){m_cheminArete.push_back(numArete);}
+    int size_predArete(){return m_cheminArete.size();}
+    int getPredArete(int i){return m_cheminArete[i];}
 };
 
 class Arete
@@ -64,6 +69,7 @@ public:
     int getNumFirst()const{return m_lien.first->getNum();}
     int getNum()const{return m_num;}
     void calculPoid2(int P);
+    std::string getNom(){return m_trajet;}
 };
 
 #endif // SOMMET_H_INCLUDED

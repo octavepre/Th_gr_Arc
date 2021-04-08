@@ -42,6 +42,7 @@ public:
     int size_poidPred()const;
     int getPoidChemin(int i)const;
     std::vector <int> getChemin() const{return m_chemin;}
+    std::vector <int> getCheminArete() const {return m_PoidCheminArete;}
 };
 
 class Arete

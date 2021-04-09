@@ -1,4 +1,5 @@
 #include "Graphe.h"
+#include "Personnage.h"
 
 void questionnaire()
 {
@@ -68,6 +69,12 @@ void Graphe::setPoidDescente(int typeDescente)
     }
     case 1:
     {
+        ///MODIFIER POUR DEMANDER LES LOGS DU MEC
+        ///MODIFIER POUR DEMANDER LES LOGS DU MEC
+        ///MODIFIER POUR DEMANDER LES LOGS DU MEC
+        ///MODIFIER POUR DEMANDER LES LOGS DU MEC
+        ///MODIFIER POUR DEMANDER LES LOGS DU MEC
+        ///MODIFIER POUR DEMANDER LES LOGS DU MEC
         for (int i = 0 ; i < 12; i++)
         {
             system("cls");
@@ -110,13 +117,93 @@ void Graphe::setPoidDescente(int typeDescente)
             }
         }
         break;
+
+        case 2:///se creer un compte
+        {
+            //std::ofstream ofs {"Logs.txt"};
+            std::ifstream ifs {"Logs.txt"};
+            std::vector <Personnage> personnageTot;
+            while(ifs)
+            {
+                std::string user;
+                std::vector <int> pref;
+                ifs >> user;
+                //std::cout << "|" << user << "|";
+                for (int i = 0 ; i < 12 ; i++)
+                {
+                    int b;///numpref
+                    ifs >> b;
+                    pref.push_back(b);
+                }
+                Personnage personnage (user,pref);
+                personnageTot.push_back(personnage);
+            }
+
+            std::ofstream ofs {"Logs.txt"};
+            std::cout << "Choisissez votre username." << std::endl;
+            std::string user;
+            std::vector <int> pref;
+            std::cin >> user;
+            //Personnage personnage(user);
+            for (int i = 0 ; i < 12; i++)
+            {
+                system("cls");
+                int P = 0;
+                if(i==0)
+                    std::cout << "Aimez vous les pistes verte ?" << std::endl;
+                if(i==1)
+                    std::cout << "Aimez vous les pistes bleu ?" << std::endl;
+                if(i==2)
+                    std::cout << "Aimez vous les pistes rouge ?" << std::endl;
+                if(i==3)
+                    std::cout << "Aimez vous les pistes noir ?" << std::endl;
+                if(i==4)
+                    std::cout << "Aimez vous les pistes de kilometre lance ?" << std::endl;
+                if(i==5)
+                    std::cout << "Aimez vous les snowpark ?" << std::endl;
+                if(i==6)
+                    std::cout << "Aimez vous les telepherique ?" << std::endl;
+                if(i==7)
+                    std::cout << "Aimez vous les telecabine ?" << std::endl;
+                if(i==8)
+                    std::cout << "Aimez vous les telesiege debrayable ?" << std::endl;
+                if(i==9)
+                    std::cout << "Aimez vous les telesiege ?" << std::endl;
+                if(i==10)
+                    std::cout << "Aimez vous les teleski ?" << std::endl;
+                if(i==11)
+                    std::cout << "Aimez vous prendre le bus ?" << std::endl;
+
+                questionnaire();
+                do
+                {
+                    std::cin >> P;
+                }
+                while (P < 1 || P > 5);
+                pref.push_back(P);
+                ///ECRIRE DANS LE FICHIER
+            }
+            Personnage personnage(user,pref);
+            personnageTot.push_back(personnage);
+            for (unsigned int i = 0; i < personnageTot.size() ; i++)
+            {
+                //std::cout << personnageTot[i].getUser();
+                ofs << personnageTot[i].getUser();
+                for (int j = 0 ; j < 12 ; j++)
+                {
+                    ofs << std::endl;
+                    ofs << personnageTot[i].getPref(j);
+                    ofs << std::endl;
+                }
+            }
+            break;
+        }
     }
     }
 }
 
 void Graphe::Dijkstra(int depart,int arriver,int affichage)
 {
-    //std::cout << depart;
     int current = depart;
     int fin = arriver;
     std::vector <Sommet> listeChemin;
@@ -228,14 +315,16 @@ void Graphe::Dijkstra(int depart,int arriver,int affichage)
                 {
                     pivot = listeChemin[j];
                 }
-                if(compteur2==1){
-                pivot.afficherPred(m_sommets,m_aretes);
-                compteur2 = 0;}
+                if(compteur2==1)
+                {
+                    pivot.afficherPred(m_sommets,m_aretes);
+                    compteur2 = 0;
+                }
             }
             /*if(compteur2==1){
                 pivot.afficherPred(m_sommets,m_aretes);
                 compteur2 = 0;}*/
-                setVisiteToTrueAll(listeChemin,pivot.getNum()+1);
+            setVisiteToTrueAll(listeChemin,pivot.getNum()+1);
         }
 
         std::cout << std::endl;
@@ -259,7 +348,8 @@ void Graphe::Dijkstra(int depart,int arriver,int affichage)
 
             std::cout << std::endl << std::endl;
         }
-    }else if(affichage == 1)
+    }
+    else if(affichage == 1)
     {
         for(int i = 0;  i < listeChemin.size() ; i++)
         {
@@ -272,7 +362,8 @@ void Graphe::Dijkstra(int depart,int arriver,int affichage)
         {
             std::cout << "Desoler mais il n'existe pas de chemin qui n'empreinte AUCUN de vos choix a proscrire." << std::endl << "Voici quand meme le chemin qui en empreintera le moins" << std::endl;
             pivot.afficherPred(m_sommets,m_aretes);
-        }else
+        }
+        else
         {
             std::cout << "Le chemin qui repond le mieux a vos critere est le suivant :" << std::endl;
             pivot.afficherPred(m_sommets,m_aretes);
@@ -337,6 +428,11 @@ void Graphe::BFS(int S0)
         }
         std::cout <<std::endl;
         fifi.pop(); ///On defile le premier sommet pour passer au suivant
+    }
+    for (unsigned int i = 0 ; i < m_sommets.size(); i ++)
+    {
+        m_sommets[i]->setState(0);
+        m_sommets[i]->restorePrede();
     }
 }
 

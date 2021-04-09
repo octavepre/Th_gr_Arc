@@ -84,6 +84,10 @@ void Sommet::setPrede(Sommet* b)
     }
 }
 
+void Sommet::restorePrede()
+{
+    m_predecesseur.clear();
+}
 
 
 int Sommet::getPoid(int i)const{return m_succ[i]->getPoid();}

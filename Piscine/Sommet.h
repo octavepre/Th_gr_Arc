@@ -54,6 +54,7 @@ public:
     void setPrede(Sommet* b);
     std::vector<Sommet*> getPrede()const{return m_predecesseur;}
     void setVisiteToFalse(){m_visite = false;}
+    void restorePrede();
 };
 
 class Arete

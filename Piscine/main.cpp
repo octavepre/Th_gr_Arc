@@ -14,8 +14,9 @@ void menu(Graphe& ski)
         std::cout << "0. Afficher toute les stations" <<std::endl;
         std::cout << "1. Chercher l'itineraire le plus rapide" <<std::endl;
         std::cout << "2. Chercher l'itineraire le plus court" <<std::endl;
-        std::cout << "3. Determiner un chemin adapter a votre niveau" <<std::endl;
-        std::cout << "4. Quitter" <<std::endl;
+        std::cout << "3. Vos chemin prefere" <<std::endl;
+        std::cout << "4. Creer profile" << std::endl;
+        std::cout << "5. Quitter" <<std::endl;
         do
         {
             std::cin >> menu;
@@ -89,6 +90,11 @@ void menu(Graphe& ski)
             break;
         }
         case 4:
+            {
+                ski.setPoidDescente (2);
+                break;
+            }
+        case 5:
         {
             system("cls");
             std::cout << "SHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";

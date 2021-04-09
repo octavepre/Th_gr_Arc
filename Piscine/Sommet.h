@@ -14,11 +14,11 @@ private:
     int m_altitude;
     std::vector <Arete*> m_succ;
     bool m_visite;
-                        ///Num , Poid
-    std::vector <std::pair <int,int>> m_chemin2;///POUR DIJKSTRA
-    std::vector <int> m_PoidCheminArete;
+
+    std::vector <int> m_PoidCheminArete;///Inutile
     std::vector <int> m_chemin;
     std::vector <int> m_cheminArete;
+
     int m_state;
     std::vector<Sommet*>m_predecesseur;
 
@@ -41,7 +41,6 @@ public:
     int calculPoid(std::vector <Sommet*> m_sommet);
     int getPoidPred(int num,int numArete);
     void afficherPred(std::vector <Sommet*> m_sommet,std::vector <Arete*> m_aretes);
-    //int getPoidPred2(int num, int poid);
     void push_poidPred(int i){m_PoidCheminArete.push_back(i);}
     int getPoid(int i)const;
     int size_poidPred()const;
@@ -54,6 +53,7 @@ public:
     int getPredArete(int i){return m_cheminArete[i];}
     void setPrede(Sommet* b);
     std::vector<Sommet*> getPrede()const{return m_predecesseur;}
+    void setVisiteToFalse(){m_visite = false;}
 };
 
 class Arete

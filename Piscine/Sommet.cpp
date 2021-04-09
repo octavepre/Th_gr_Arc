@@ -63,15 +63,16 @@ void Sommet::afficherPred(std::vector <Sommet*> m_sommet,std::vector <Arete*> m_
     std::cout << getNum() << "<---";
     for(unsigned int i = 0; i <m_chemin.size() ; i++)
     {
-        if(i<m_chemin.size()-2){
+        if(i<m_chemin.size()-1){
         std::cout << "|" << m_aretes[m_cheminArete[i]-1]->getType() << "|{" << m_aretes[m_cheminArete[i]-1]->getNom() << "} ";
         std::cout << m_sommet[m_chemin[i]-1]->getNum();
         std::cout << "<---";}
-        if(i==m_chemin.size()-1){
+        else{
         std::cout << "|" << m_aretes[m_cheminArete[i]-1]->getType() << "|{" << m_aretes[m_cheminArete[i]-1]->getNom() << "} ";
         std::cout << m_sommet[m_chemin[i]-1]->getNum();
         }
     }
+    std::cout << std::endl;
 }
 
 void Sommet::setPrede(Sommet* b)
@@ -83,18 +84,7 @@ void Sommet::setPrede(Sommet* b)
     }
 }
 
-/*int Sommet::getPoidPred2(int num,int poid)
-{
-    for (unsigned int j = 0; j < m_succ.size() ; j++)
-    {
-        //std::cout << "#" << m_succ[j]->getNumSecond() << "#" << std::endl;
-        if(m_succ[j]->getNumSecond() == num && m_succ[j]->getPoid() == poid)
-        {
-            //std::cout << ":" << m_succ[j]->getPoid() << ":" << poid << ":" << std::endl;
-            return m_succ[j]->getPoid();
-        }
-    }
-}*/
+
 
 int Sommet::getPoid(int i)const{return m_succ[i]->getPoid();}
 int Sommet::size_poidPred()const{return m_PoidCheminArete.size();}

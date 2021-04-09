@@ -114,13 +114,12 @@ void Graphe::setPoidDescente(int typeDescente)
     }
 }
 
-void Graphe::Dijkstra(int depart,int arriver)
+void Graphe::Dijkstra(int depart,int arriver,int affichage)
 {
     //std::cout << depart;
     int current = depart;
     int fin = arriver;
     std::vector <Sommet> listeChemin;
-    std::vector <int> Poids_liste_chemin;
     listeChemin.push_back(*m_sommets[current]);
     Sommet pivot = listeChemin[0];
     int compteur=1;
@@ -172,7 +171,7 @@ void Graphe::Dijkstra(int depart,int arriver)
         ///ainsi que tout les chemin qui ont le meme numéro que lui
         setVisiteToTrueAll(listeChemin,current + 1);
         ///METTRE LA LE POID DES ARRETE DANS LE CHEMIN
-        for(int i = 0 ; i < listeChemin.size() ; i++)
+        for(unsigned int i = 0 ; i < listeChemin.size() ; i++)
         {
             if(pivot.calculPoid(m_sommets) > listeChemin[i].calculPoid(m_sommets) && listeChemin[i].getVisite() == false)
             {
@@ -190,7 +189,7 @@ void Graphe::Dijkstra(int depart,int arriver)
 
         if(pivot.getNum() == current + 1)
         {
-            for(int i = 0 ; i < listeChemin.size() ; i++)
+            for(unsigned int i = 0 ; i < listeChemin.size() ; i++)
             {
                 if(listeChemin[i].getVisite() == false)
                 {
@@ -209,78 +208,135 @@ void Graphe::Dijkstra(int depart,int arriver)
         std::cout <<std::endl<<std::endl;*/
 
     }
-    std::cout << "tout les plsu court chemin  a partir du point rentrer sont :" << std::endl;
-    for(int i = 0;  i < listeChemin.size() ; i++)
+    ///Affichage/////////////////////////////////////////////////////////////////////////////////
+    if (affichage == 0)
     {
-        pivot =listeChemin[i];
-        pivot.afficherPred(m_sommets,m_aretes);
-        std::cout << std::endl;
-    }
-
-    for (int i = 0 ; i < 4 ; i++){
-    std::cout << "A CHANGER IL FAUT PRENDRE LE PLUS COURT A CHAQUE FOIS MAIS OKLM ON FERA APRES" << std::endl;}
-
-    std::cout << std::endl;
-    for(int i = 0;  i < listeChemin.size() ; i++)
-    {
-        if(pivot.calculPoid(m_sommets) > listeChemin[i].calculPoid(m_sommets) && listeChemin[i].getNum() == m_sommets[arriver]->getNum())
+        std::cout << "tout les plus court chemin  a partir du point rentrer sont :" << std::endl;
+        for(unsigned int i = 0;  i < listeChemin.size() ; i++)
         {
-            pivot = listeChemin[i];
+            listeChemin[i].setVisiteToFalse();
+            //std::cout << listeChemin[i].getVisite();
         }
-    }
-    if(pivot.getNum() != arriver + 1)
-    {
-        std::cout << "Desoler il n'y y a pas de chemin possible pour aller a cette station." << std::endl;
-    }
-    else
-    {
-        int compt = 0;
-        float minute = pivot.calculPoid(m_sommets);
-        std::cout << "Temps totale en minutes :" << (minute)/100/60 << std::endl;
-        pivot.afficherPred(m_sommets,m_aretes);
+        ///A REFAIRE LES 20 PROCHAINE LIGNES AFFICHES PAS LE BON TRUC
+        for(unsigned int i = 0;  i < listeChemin.size() ; i++)
+        {
+            int compteur2 = 1;
+            pivot = listeChemin[i];
+            for(unsigned int j = 0 ; j <listeChemin.size() ; j++)
+            {
+                if(listeChemin[i].getVisite() == false && listeChemin[i].getNum() == listeChemin[j].getNum() && listeChemin[i].calculPoid(m_sommets) > listeChemin[j].calculPoid(m_sommets))
+                {
+                    pivot = listeChemin[j];
+                }
+                if(compteur2==1){
+                pivot.afficherPred(m_sommets,m_aretes);
+                compteur2 = 0;}
+            }
+            /*if(compteur2==1){
+                pivot.afficherPred(m_sommets,m_aretes);
+                compteur2 = 0;}*/
+                setVisiteToTrueAll(listeChemin,pivot.getNum()+1);
+        }
 
-        std::cout << std::endl << std::endl;
+        std::cout << std::endl;
+        for(int i = 0;  i < listeChemin.size() ; i++)
+        {
+            if(pivot.calculPoid(m_sommets) > listeChemin[i].calculPoid(m_sommets) && listeChemin[i].getNum() == m_sommets[arriver]->getNum())
+            {
+                pivot = listeChemin[i];
+            }
+        }
+        if(pivot.getNum() != arriver + 1)
+        {
+            std::cout << "Desoler il n'y y a pas de chemin possible pour aller a cette station." << std::endl;
+        }
+        else
+        {
+            int compt = 0;
+            float minute = pivot.calculPoid(m_sommets);
+            std::cout << "Temps totale en minutes :" << (minute)/100/60 << std::endl;
+            pivot.afficherPred(m_sommets,m_aretes);
+
+            std::cout << std::endl << std::endl;
+        }
+    }else if(affichage == 1)
+    {
+        for(int i = 0;  i < listeChemin.size() ; i++)
+        {
+            if(pivot.calculPoid(m_sommets) > listeChemin[i].calculPoid(m_sommets) && listeChemin[i].getNum() == m_sommets[arriver]->getNum())
+            {
+                pivot = listeChemin[i];
+            }
+        }
+        if(pivot.calculPoid(m_sommets)>1000)
+        {
+            std::cout << "Desoler mais il n'existe pas de chemin qui n'empreinte AUCUN de vos choix a proscrire." << std::endl << "Voici quand meme le chemin qui en empreintera le moins" << std::endl;
+            pivot.afficherPred(m_sommets,m_aretes);
+        }else
+        {
+            std::cout << "Le chemin qui repond le mieux a vos critere est le suivant :" << std::endl;
+            pivot.afficherPred(m_sommets,m_aretes);
+        }
     }
 }
 
 void Graphe::BFS(int S0)
 {
 
-    std::queue<Sommet*>fil; //declaration Premiere file
-    std::queue<Sommet*>fifi; // declaration Deuxieme file pour stocker les predecesseur de chaque terme de la premiere
-    Sommet* sommet_b = m_sommets[S0]; // initialisation Sommet initial
-    fil.push(sommet_b); // Enfilage du Premier sommet
-    fifi.push(sommet_b); //Enfilage du Premier sommet
-    sommet_b->setState(1); // On grise le premier sommet
-    while(fil.size()!=0) // Tant que la file est non nulle
+    std::queue<Sommet*>fil; ///declaration Premiere file
+    std::queue<Sommet*>fifi; /// declaration Deuxieme file pour stocker les predecesseur de chaque terme de la premiere
+    Sommet* sommet_b = m_sommets[S0]; /// initialisation Sommet initial
+    fil.push(sommet_b); /// Enfilage du Premier sommet
+    fifi.push(sommet_b); ///Enfilage du Premier sommet
+    sommet_b->setState(1); /// On grise le premier sommet
+    while(fil.size()!=0) /// Tant que la file est non nulle
     {
-        Sommet* s = fil.front();// On affecte au pointeur de sommet s la valeur du la premiere valaur de la file pour pouvoir le manipuler
+        Sommet* s = fil.front();/// On affecte au pointeur de sommet s la valeur du la premiere valaur de la file pour pouvoir le manipuler
         //std::vector<Sommet*>Suc = m_sommets[s->getSuccNum()]; // On recupeur les successeur de s
         for(unsigned int i = 0 ; i < m_sommets[s->getNum()-1]->size_succ() ; i++)
         {
             int transition = m_sommets[s->getNum()-1]->getSuccNum(i)-1;
-            if(m_sommets[transition]->getState()==0) // On verifie que ces sommets n'aient pas été deja parcouru
+            if(m_sommets[transition]->getState()==0) /// On verifie que ces sommets n'aient pas été deja parcouru
             {
-                fil.push(m_sommets[transition]); //On enfile j (successeur de s)
-                fifi.push(m_sommets[transition]); //On enfile j (successeur de s) dans la 2eme file
-                m_sommets[transition]->setState(1); // On grise j
-                m_sommets[transition]->setPrede(s); // On Transmets les predecesseur de s en tant que predecesseur de j et on ajoute s au predecesseur de j
+                fil.push(m_sommets[transition]); ///On enfile j (successeur de s)
+                fifi.push(m_sommets[transition]); ///On enfile j (successeur de s) dans la 2eme file
+                m_sommets[transition]->setState(1); /// On grise j
+                m_sommets[transition]->setPrede(s); /// On Transmets les predecesseur de s en tant que predecesseur de j et on ajoute s au predecesseur de j
             }
         }
-        s->setState(2); // On noircit s
-        fil.pop(); // on supprime le Premiere element de la file
+        s->setState(2); /// On noircit s
+        fil.pop(); /// on supprime le Premiere element de la file
     }
-    while(fifi.size() != 0) // Tant que la file d'affichage n'est pas vode
+
+    int arriver;
+    int YN;
+    do
     {
-        //Boucle d'affichage dans l'ordre de decouverte des sommets
-        std::cout<< fifi.front()->getNum(); // On affiche la file complete du BFS avec l'ordre d'apparition
+        std::cout << "Avez vous une station d'arriver particulier ?" << std::endl << "1.Oui" << std::endl << "2.Non" << std::endl;
+        std::cin >> YN;
+    }
+    while(YN > 2 || YN < 1);
+    system("cls");
+    if(YN==1)
+    {
+        std::cout << "Ou voulez vous aller ?" << std::endl;
+        std::cin >> arriver;
+    }
+    while(fifi.size() != 0) /// Tant que la file d'affichage n'est pas vide
+    {
+        ///Boucle d'affichage dans l'ordre de decouverte des sommets
+        std::cout<< fifi.front()->getNum(); /// On affiche la file complete du BFS avec l'ordre d'apparition
         std::vector<Sommet*> Pred = fifi.front()->getPrede();
-        for(size_t i(0); i<Pred.size();i++)
+        for(size_t i(0); i<Pred.size(); i++)
         {
-            std::cout << "<--" <<Pred[i]->getNum();// On affiche le predec predecesseur du sommet Pred[i]; Le i-eme numero du BFS
+            std::cout << "<--" <<Pred[i]->getNum();/// On affiche le predec predecesseur du sommet Pred[i]; Le i-eme numero du BFS
+        }
+        if(fifi.front()->getNum() == arriver)
+        {
+            std::cout << "      <- Il vous faut ce chemin la !";
         }
         std::cout <<std::endl;
-        fifi.pop(); //On defile le premier sommet pour passer au suivant
+        fifi.pop(); ///On defile le premier sommet pour passer au suivant
     }
 }
 
@@ -315,75 +371,3 @@ void Graphe::setVisiteToTrueAll(std::vector <Sommet>& listeChemin,int current)
         }
     }
 }
-/*
-int Graphe::findPoidsArreteMin(int SommetD, int SommetA)
-{
-    std::vector<Arete*> cherche = m_aretes;
-    std::vector<Arete*> tri;
-    for(int i=0; i<cherche.size(); i++)
-    {
-        if((cherche[i]->getNumFirst() == SommetD) && (cherche[i]->getNumSecond() == SommetA))
-        {
-            tri.push_back(cherche[i]);
-        }
-    }
-    int en_desordre = 1; // TRI A BULLE
-    while (en_desordre)
-    {
-        en_desordre = 0;
-        for (int j=0; j < tri.size()-1; j++)
-        {
-            if(tri[j]->getPoid() > tri[j+1]->getPoid())
-            {
-                std::swap(tri[j+1], tri[j]);
-                en_desordre = 1;
-            }
-        }
-    }
-    return tri[0]->getPoid();
-}
-
-std::string Graphe::findTypeArrete(int SommetD, int SommetA, int poids)
-{
-    std::vector<Arete*> cherche = m_aretes;
-    std::vector<Arete*> tri;
-    for(int i=0; i<cherche.size(); i++)
-    {
-        if((cherche[i]->getNumFirst() == SommetD) && (cherche[i]->getNumSecond() == SommetA) && (cherche[i]->getPoid() == poids))
-        {
-            return cherche[i]->getType();
-        }
-    }
-}
-
-std::string Graphe::findTypeArreteMin(int SommetD, int SommetA)
-{
-    std::vector<Arete*> cherche = m_aretes;
-    std::vector<Arete*> tri;
-    for(int i=0; i<cherche.size(); i++)
-    {
-        if((cherche[i]->getNumFirst() == SommetD) && (cherche[i]->getNumSecond() == SommetA))
-        {
-            tri.push_back(cherche[i]);
-        }
-    }
-    int en_desordre = 1; // TRI A BULLE
-    while (en_desordre)
-    {
-        en_desordre = 0;
-        for (int j=0; j < tri.size()-1; j++)
-        {
-            if(tri[j]->getPoid() > tri[j+1]->getPoid())
-            {
-                std::swap(tri[j+1], tri[j]);
-                en_desordre = 1;
-            }
-        }
-    }
-
-    std::cout << " POIDIISISII 00 : "<<tri[0]->getPoid()<<std::endl;
-    std::cout << "TYPE 00 : " << tri[0]->getType();
-
-    return tri[0]->getType();
-}
-*/

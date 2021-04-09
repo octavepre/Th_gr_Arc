@@ -18,7 +18,7 @@ public:
     void afficher();
 
     void setPoidDescente(int typeDescente);
-    void Dijkstra(int depart,int arriver);
+    void Dijkstra(int depart,int arriver,int affichage);
     void BFS(int S0);
     bool AllTrue(std::vector <Sommet> listeChemin)const;
     void setVisiteToTrueAll(std::vector <Sommet>& PleaseWork,int current);

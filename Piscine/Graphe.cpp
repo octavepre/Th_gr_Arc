@@ -114,7 +114,7 @@ void Graphe::setPoidDescente(int typeDescente)
     }
 }
 
-void Graphe::Dijkstra(int depart,int arriver)
+void Graphe::Dijkstra(int depart,int arriver,int affichage)
 {
     //std::cout << depart;
     int current = depart;
@@ -209,56 +209,74 @@ void Graphe::Dijkstra(int depart,int arriver)
 
     }
     ///Affichage/////////////////////////////////////////////////////////////////////////////////
-    std::cout << "tout les plus court chemin  a partir du point rentrer sont :" << std::endl;
-    for(unsigned int i = 0;  i < listeChemin.size() ; i++)
+    if (affichage == 0)
     {
-        listeChemin[i].setVisiteToFalse();
-        //std::cout << listeChemin[i].getVisite();
-    }
-    for(unsigned int i = 0;  i < listeChemin.size() ; i++)
-    {
-        pivot = listeChemin[i];
-        for(unsigned int j = 0 ; j <listeChemin.size() ; j++)
+        std::cout << "tout les plus court chemin  a partir du point rentrer sont :" << std::endl;
+        for(unsigned int i = 0;  i < listeChemin.size() ; i++)
         {
-            if(listeChemin[i].getVisite() == false && listeChemin[i].getNum() == listeChemin[j].getNum() && listeChemin[i].calculPoid(m_sommets) > listeChemin[j].calculPoid(m_sommets))
+            listeChemin[i].setVisiteToFalse();
+            //std::cout << listeChemin[i].getVisite();
+        }
+        ///A REFAIRE LES 20 PROCHAINE LIGNES AFFICHES PAS LE BON TRUC
+        for(unsigned int i = 0;  i < listeChemin.size() ; i++)
+        {
+            int compteur2 = 1;
+            pivot = listeChemin[i];
+            for(unsigned int j = 0 ; j <listeChemin.size() ; j++)
             {
-               pivot = listeChemin[j];
+                if(listeChemin[i].getVisite() == false && listeChemin[i].getNum() == listeChemin[j].getNum() && listeChemin[i].calculPoid(m_sommets) > listeChemin[j].calculPoid(m_sommets))
+                {
+                    pivot = listeChemin[j];
+                }
+                if(compteur2==1){
+                pivot.afficherPred(m_sommets,m_aretes);
+                compteur2 = 0;}
+            }
+            /*if(compteur2==1){
+                pivot.afficherPred(m_sommets,m_aretes);
+                compteur2 = 0;}*/
+                setVisiteToTrueAll(listeChemin,pivot.getNum()+1);
+        }
+
+        std::cout << std::endl;
+        for(int i = 0;  i < listeChemin.size() ; i++)
+        {
+            if(pivot.calculPoid(m_sommets) > listeChemin[i].calculPoid(m_sommets) && listeChemin[i].getNum() == m_sommets[arriver]->getNum())
+            {
+                pivot = listeChemin[i];
             }
         }
-        if(pivot.getVisite()==false)
+        if(pivot.getNum() != arriver + 1)
         {
+            std::cout << "Desoler il n'y y a pas de chemin possible pour aller a cette station." << std::endl;
+        }
+        else
+        {
+            int compt = 0;
+            float minute = pivot.calculPoid(m_sommets);
+            std::cout << "Temps totale en minutes :" << (minute)/100/60 << std::endl;
             pivot.afficherPred(m_sommets,m_aretes);
-            setVisiteToTrueAll(listeChemin,pivot.getNum()+1);
+
+            std::cout << std::endl << std::endl;
         }
-         ///setvisittotrueall
-        /*pivot = listeChemin[i];
-        pivot.afficherPred(m_sommets,m_aretes);
-        std::cout << std::endl;*/
-    }
-
-    /*for (int i = 0 ; i < 4 ; i++){
-    std::cout << "A CHANGER IL FAUT PRENDRE LE PLUS COURT A CHAQUE FOIS MAIS OKLM ON FERA APRES" << std::endl;}*/
-
-    std::cout << std::endl;
-    for(int i = 0;  i < listeChemin.size() ; i++)
+    }else if(affichage == 1)
     {
-        if(pivot.calculPoid(m_sommets) > listeChemin[i].calculPoid(m_sommets) && listeChemin[i].getNum() == m_sommets[arriver]->getNum())
+        for(int i = 0;  i < listeChemin.size() ; i++)
         {
-            pivot = listeChemin[i];
+            if(pivot.calculPoid(m_sommets) > listeChemin[i].calculPoid(m_sommets) && listeChemin[i].getNum() == m_sommets[arriver]->getNum())
+            {
+                pivot = listeChemin[i];
+            }
         }
-    }
-    if(pivot.getNum() != arriver + 1)
-    {
-        std::cout << "Desoler il n'y y a pas de chemin possible pour aller a cette station." << std::endl;
-    }
-    else
-    {
-        int compt = 0;
-        float minute = pivot.calculPoid(m_sommets);
-        std::cout << "Temps totale en minutes :" << (minute)/100/60 << std::endl;
-        pivot.afficherPred(m_sommets,m_aretes);
-
-        std::cout << std::endl << std::endl;
+        if(pivot.calculPoid(m_sommets)>1000)
+        {
+            std::cout << "Desoler mais il n'existe pas de chemin qui n'empreinte AUCUN de vos choix a proscrire." << std::endl << "Voici quand meme le chemin qui en empreintera le moins" << std::endl;
+            pivot.afficherPred(m_sommets,m_aretes);
+        }else
+        {
+            std::cout << "Le chemin qui repond le mieux a vos critere est le suivant :" << std::endl;
+            pivot.afficherPred(m_sommets,m_aretes);
+        }
     }
 }
 
@@ -296,7 +314,8 @@ void Graphe::BFS(int S0)
     {
         std::cout << "Avez vous une station d'arriver particulier ?" << std::endl << "1.Oui" << std::endl << "2.Non" << std::endl;
         std::cin >> YN;
-    }while(YN > 2 || YN < 1);
+    }
+    while(YN > 2 || YN < 1);
     system("cls");
     if(YN==1)
     {
@@ -308,7 +327,7 @@ void Graphe::BFS(int S0)
         ///Boucle d'affichage dans l'ordre de decouverte des sommets
         std::cout<< fifi.front()->getNum(); /// On affiche la file complete du BFS avec l'ordre d'apparition
         std::vector<Sommet*> Pred = fifi.front()->getPrede();
-        for(size_t i(0); i<Pred.size();i++)
+        for(size_t i(0); i<Pred.size(); i++)
         {
             std::cout << "<--" <<Pred[i]->getNum();/// On affiche le predec predecesseur du sommet Pred[i]; Le i-eme numero du BFS
         }
@@ -352,75 +371,3 @@ void Graphe::setVisiteToTrueAll(std::vector <Sommet>& listeChemin,int current)
         }
     }
 }
-/*
-int Graphe::findPoidsArreteMin(int SommetD, int SommetA)
-{
-    std::vector<Arete*> cherche = m_aretes;
-    std::vector<Arete*> tri;
-    for(int i=0; i<cherche.size(); i++)
-    {
-        if((cherche[i]->getNumFirst() == SommetD) && (cherche[i]->getNumSecond() == SommetA))
-        {
-            tri.push_back(cherche[i]);
-        }
-    }
-    int en_desordre = 1; // TRI A BULLE
-    while (en_desordre)
-    {
-        en_desordre = 0;
-        for (int j=0; j < tri.size()-1; j++)
-        {
-            if(tri[j]->getPoid() > tri[j+1]->getPoid())
-            {
-                std::swap(tri[j+1], tri[j]);
-                en_desordre = 1;
-            }
-        }
-    }
-    return tri[0]->getPoid();
-}
-
-std::string Graphe::findTypeArrete(int SommetD, int SommetA, int poids)
-{
-    std::vector<Arete*> cherche = m_aretes;
-    std::vector<Arete*> tri;
-    for(int i=0; i<cherche.size(); i++)
-    {
-        if((cherche[i]->getNumFirst() == SommetD) && (cherche[i]->getNumSecond() == SommetA) && (cherche[i]->getPoid() == poids))
-        {
-            return cherche[i]->getType();
-        }
-    }
-}
-
-std::string Graphe::findTypeArreteMin(int SommetD, int SommetA)
-{
-    std::vector<Arete*> cherche = m_aretes;
-    std::vector<Arete*> tri;
-    for(int i=0; i<cherche.size(); i++)
-    {
-        if((cherche[i]->getNumFirst() == SommetD) && (cherche[i]->getNumSecond() == SommetA))
-        {
-            tri.push_back(cherche[i]);
-        }
-    }
-    int en_desordre = 1; // TRI A BULLE
-    while (en_desordre)
-    {
-        en_desordre = 0;
-        for (int j=0; j < tri.size()-1; j++)
-        {
-            if(tri[j]->getPoid() > tri[j+1]->getPoid())
-            {
-                std::swap(tri[j+1], tri[j]);
-                en_desordre = 1;
-            }
-        }
-    }
-
-    std::cout << " POIDIISISII 00 : "<<tri[0]->getPoid()<<std::endl;
-    std::cout << "TYPE 00 : " << tri[0]->getType();
-
-    return tri[0]->getType();
-}
-*/

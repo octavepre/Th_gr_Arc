@@ -39,7 +39,8 @@ void menu(Graphe& ski)
                 std::cin >> arriver;
             }while(depart < 1 || depart > 37 || arriver < 1 || arriver > 37 ||depart == arriver);
             system("cls");
-            ski.Dijkstra(depart-1,arriver-1);
+            ski.setPoidDescente(DEFAULT);
+            ski.Dijkstra(depart-1,arriver-1,0);
             break;
         }
     case 2:
@@ -73,7 +74,7 @@ void menu(Graphe& ski)
                 std::cin >> arriver;
             }while(depart < 1 || depart > 37 || arriver < 1 || arriver > 37 ||depart == arriver);
             system("cls");
-            ski.Dijkstra(depart-1,arriver-1);
+            ski.Dijkstra(depart-1,arriver-1,1);
             break;
         }
     case 4:
@@ -89,7 +90,6 @@ void menu(Graphe& ski)
 int main()
 {
     Graphe ski("data_arcs.txt");
-    //ski.afficher();
     menu(ski);
     return 0;
 }

@@ -47,7 +47,13 @@ void menu(Graphe& ski)
             system("cls");
             ski.setPoidDescente(DEFAULT);
             ski.Dijkstra(depart-1,arriver-1,0);
-            std::cout<<std::endl<<"0. Quitter"<<std::endl;int shee;do{std::cin >> shee;}while(shee != 0);
+            std::cout<<std::endl<<"0. Quitter"<<std::endl;
+            int shee;
+            do
+            {
+                std::cin >> shee;
+            }
+            while(shee != 0);
             break;
         }
         case 2:
@@ -62,37 +68,56 @@ void menu(Graphe& ski)
             while(depart < 1 || depart > 37);
             system("cls");
             ski.BFS(depart-1);
-            std::cout<<std::endl<<"0. Quitter"<<std::endl;int shee;do{std::cin >> shee;}while(shee != 0);
+            std::cout<<std::endl<<"0. Quitter"<<std::endl;
+            int shee;
+            do
+            {
+                std::cin >> shee;
+            }
+            while(shee != 0);
             break;
         }
         case 3:
         {
+            ski.setUtiliserToFalse();
             system("cls");
-            std::cout << "Veuillez repondre a ce questionniare." << std::endl;
-            system("pause");
             ski.setPoidDescente (1);
             system("cls");
             int depart=0,arriver=0;
-            do
+            if(ski.getUtiliser() == true)
             {
+                do
+                {
+                    system("cls");
+                    std::cout << "Dans quel station etes vous ?" << std::endl;
+                    std::cin >> depart;
+                    std::cout << "Dans quel station souhaitez vous vous rendre ?" << std::endl;
+                    std::cin >> arriver;
+                }
+                while(depart < 1 || depart > 37 || arriver < 1 || arriver > 37 ||depart == arriver);
                 system("cls");
-                std::cout << "Dans quel station etes vous ?" << std::endl;
-                std::cin >> depart;
-                std::cout << "Dans quel station souhaitez vous vous rendre ?" << std::endl;
-                std::cin >> arriver;
+                //std::cout << "SHEEEEEE";
+                ski.Dijkstra(depart-1,arriver-1,1);
+                std::cout<<std::endl<<"0. Quitter"<<std::endl;
+                int shee;
+                do
+                {
+                    std::cin >> shee;
+                }
+                while(shee != 0);
             }
-            while(depart < 1 || depart > 37 || arriver < 1 || arriver > 37 ||depart == arriver);
-            system("cls");
-            //std::cout << "SHEEEEEE";
-            ski.Dijkstra(depart-1,arriver-1,1);
-            std::cout<<std::endl<<"0. Quitter"<<std::endl;int shee;do{std::cin >> shee;}while(shee != 0);
+            else if(ski.getUtiliser() == false)
+            {
+                std::cout << "Il n'existe pas de compte a ce nom." << std::endl;
+                system("pause");
+            }
             break;
         }
         case 4:
-            {
-                ski.setPoidDescente (2);
-                break;
-            }
+        {
+            ski.setPoidDescente (2);
+            break;
+        }
         case 5:
         {
             system("cls");

@@ -67,7 +67,7 @@ void Graphe::setPoidDescente(int typeDescente)
         }
         break;
     }
-    case 1:
+    case 1:///on tape le nom du compte a utiliser
     {
         ///MODIFIER POUR DEMANDER LES LOGS DU MEC
         ///MODIFIER POUR DEMANDER LES LOGS DU MEC
@@ -75,6 +75,72 @@ void Graphe::setPoidDescente(int typeDescente)
         ///MODIFIER POUR DEMANDER LES LOGS DU MEC
         ///MODIFIER POUR DEMANDER LES LOGS DU MEC
         ///MODIFIER POUR DEMANDER LES LOGS DU MEC
+        std::ifstream ifs {"Logs.txt"};
+        int P;
+        std::vector <Personnage> personnageTot;
+        std::string username;
+        while(ifs)
+        {
+            std::string user;
+            std::vector <int> pref;
+            ifs >> user;
+            //std::cout << "|" << user << "|";
+            for (int i = 0 ; i < 12 ; i++)
+            {
+                int b;///numpref
+                ifs >> b;
+                pref.push_back(b);
+            }
+            Personnage personnage (user,pref);
+            personnageTot.push_back(personnage);
+        }
+        std::cout << "Rentrez votre username." << std::endl;
+        std::cin >> username;
+        for(unsigned int i = 0 ; i < personnageTot.size() ; i++)
+        {
+            if(personnageTot[i].getUser() == username)
+            {
+                setUtiliserToTrue();
+                for(int k = 0 ; k < 12 ; k++)
+                {
+                    P = personnageTot[i].getPref(k);
+                    for (unsigned int j = 0 ; j < m_aretes.size() ; j++)
+                    {
+                        m_aretes[j]->calculPoid2(P);
+                    }
+                }
+            }
+        }
+
+        break;
+    }
+    case 2:///se creer un compte
+    {
+        //std::ofstream ofs {"Logs.txt"};
+        std::ifstream ifs {"Logs.txt"};
+        std::vector <Personnage> personnageTot;
+        while(ifs)
+        {
+            std::string user;
+            std::vector <int> pref;
+            ifs >> user;
+            //std::cout << "|" << user << "|";
+            for (int i = 0 ; i < 12 ; i++)
+            {
+                int b;///numpref
+                ifs >> b;
+                pref.push_back(b);
+            }
+            Personnage personnage (user,pref);
+            personnageTot.push_back(personnage);
+        }
+
+        std::ofstream ofs {"Logs.txt"};
+        std::cout << "Choisissez votre username." << std::endl;
+        std::string user;
+        std::vector <int> pref;
+        std::cin >> user;
+        //Personnage personnage(user);
         for (int i = 0 ; i < 12; i++)
         {
             system("cls");
@@ -110,107 +176,37 @@ void Graphe::setPoidDescente(int typeDescente)
                 std::cin >> P;
             }
             while (P < 1 || P > 5);
-
-            for (unsigned int j = 0 ; j < m_aretes.size() ; j++)
+            pref.push_back(P);
+        }
+        /*for (unsigned int i = 0; i < personnageTot.size() ; i++)
+        {
+            std::cout << personnageTot[i].getUser();
+            for (int j = 0 ; j < 12 ; j++)
             {
-                m_aretes[j]->calculPoid2(P);
+                std::cout << std::endl;
+                std::cout << personnageTot[i].getPref(j);
             }
+        }
+        system("pause");*/
+        personnageTot.pop_back();
+        Personnage personnage(user,pref);
+        personnageTot.push_back(personnage);
+        for (unsigned int i = 0; i < personnageTot.size() ; i++)
+        {
+            //std::cout << personnageTot[i].getUser();
+            ofs << personnageTot[i].getUser();
+            for (int j = 0 ; j < 12 ; j++)
+            {
+                ofs << std::endl;
+                ofs << personnageTot[i].getPref(j);
+            }
+            ofs << std::endl;
         }
         break;
-
-        case 2:///se creer un compte
-        {
-            //std::ofstream ofs {"Logs.txt"};
-            std::ifstream ifs {"Logs.txt"};
-            std::vector <Personnage> personnageTot;
-            while(ifs)
-            {
-                std::string user;
-                std::vector <int> pref;
-                ifs >> user;
-                //std::cout << "|" << user << "|";
-                for (int i = 0 ; i < 12 ; i++)
-                {
-                    int b;///numpref
-                    ifs >> b;
-                    pref.push_back(b);
-                }
-                Personnage personnage (user,pref);
-                personnageTot.push_back(personnage);
-            }
-
-            std::ofstream ofs {"Logs.txt"};
-            std::cout << "Choisissez votre username." << std::endl;
-            std::string user;
-            std::vector <int> pref;
-            std::cin >> user;
-            //Personnage personnage(user);
-            for (int i = 0 ; i < 12; i++)
-            {
-                system("cls");
-                int P = 0;
-                if(i==0)
-                    std::cout << "Aimez vous les pistes verte ?" << std::endl;
-                if(i==1)
-                    std::cout << "Aimez vous les pistes bleu ?" << std::endl;
-                if(i==2)
-                    std::cout << "Aimez vous les pistes rouge ?" << std::endl;
-                if(i==3)
-                    std::cout << "Aimez vous les pistes noir ?" << std::endl;
-                if(i==4)
-                    std::cout << "Aimez vous les pistes de kilometre lance ?" << std::endl;
-                if(i==5)
-                    std::cout << "Aimez vous les snowpark ?" << std::endl;
-                if(i==6)
-                    std::cout << "Aimez vous les telepherique ?" << std::endl;
-                if(i==7)
-                    std::cout << "Aimez vous les telecabine ?" << std::endl;
-                if(i==8)
-                    std::cout << "Aimez vous les telesiege debrayable ?" << std::endl;
-                if(i==9)
-                    std::cout << "Aimez vous les telesiege ?" << std::endl;
-                if(i==10)
-                    std::cout << "Aimez vous les teleski ?" << std::endl;
-                if(i==11)
-                    std::cout << "Aimez vous prendre le bus ?" << std::endl;
-
-                questionnaire();
-                do
-                {
-                    std::cin >> P;
-                }
-                while (P < 1 || P > 5);
-                pref.push_back(P);
-            }
-            /*for (unsigned int i = 0; i < personnageTot.size() ; i++)
-            {
-                std::cout << personnageTot[i].getUser();
-                for (int j = 0 ; j < 12 ; j++)
-                {
-                    std::cout << std::endl;
-                    std::cout << personnageTot[i].getPref(j);
-                }
-            }
-            system("pause");*/
-            personnageTot.pop_back();
-            Personnage personnage(user,pref);
-            personnageTot.push_back(personnage);
-            for (unsigned int i = 0; i < personnageTot.size() ; i++)
-            {
-                //std::cout << personnageTot[i].getUser();
-                ofs << personnageTot[i].getUser();
-                for (int j = 0 ; j < 12 ; j++)
-                {
-                    ofs << std::endl;
-                    ofs << personnageTot[i].getPref(j);
-                }
-                ofs << std::endl;
-            }
-            break;
-        }
     }
     }
 }
+
 
 void Graphe::Dijkstra(int depart,int arriver,int affichage)
 {
@@ -221,9 +217,8 @@ void Graphe::Dijkstra(int depart,int arriver,int affichage)
     listeChemin.push_back(*m_sommets[current]);
     Sommet pivot = listeChemin[0];
     int compteur=1;
-    //std::cout << "[" << m_sommets[depart]->getNum() << "," << m_sommets[arriver]->getNum() << "]";
-    //std::cout << "[" << pivot.getNum() <<"]";
-    while(AllTrue(listeChemin) == false /*&& m_sommets[current]->getNum() != arriver+1*/)
+
+    while(AllTrue(listeChemin) == false)
     {
         ///On ajoute les sortants(successeurs) du chemin actuel dans les nouveaux chemin possible
         for(unsigned int i = 0 ; i < m_sommets[current]->size_succ() ; i++)
@@ -311,7 +306,7 @@ void Graphe::Dijkstra(int depart,int arriver,int affichage)
     if (affichage == 0)
     {
         std::cout << "tout les plus court chemin  a partir du point rentrer sont :" << std::endl;
-        ///A REFAIRE LES 20 PROCHAINE LIGNES AFFICHES PAS LE BON TRUC
+
         for(unsigned int i = 0;  i < listeCheminFinal.size() ; i++)
         {
             listeCheminFinal[i].afficherPred(m_sommets,m_aretes);
@@ -360,10 +355,10 @@ void Graphe::Dijkstra(int depart,int arriver,int affichage)
         }
     }
     for(unsigned int i = 0;  i < m_sommets.size() ; i++)
-        {
-            m_sommets[i]->setVisiteToFalse();
-            m_sommets[i]->clearS();
-        }
+    {
+        m_sommets[i]->setVisiteToFalse();
+        m_sommets[i]->clearS();
+    }
 }
 
 void Graphe::BFS(int S0)

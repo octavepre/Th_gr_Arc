@@ -61,6 +61,7 @@ int Sommet::getPoidPred(int num,int numArete)
 void Sommet::afficherPred(std::vector <Sommet*> m_sommet,std::vector <Arete*> m_aretes)
 {
     std::cout << getNum() << "<---";
+    std::cout << "";
     for(unsigned int i = 0; i <m_chemin.size() ; i++)
     {
         if(i<m_chemin.size()-1){

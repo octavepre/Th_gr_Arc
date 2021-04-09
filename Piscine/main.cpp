@@ -21,8 +21,7 @@ void menu(Graphe& ski)
         {
             std::cin >> menu;
         }
-        while(menu < 0 || menu > 4);
-        //std::cout << "lol";
+        while(menu < 0 || menu > 5);
 
         switch (menu)
         {
@@ -70,10 +69,9 @@ void menu(Graphe& ski)
         {
             system("cls");
             std::cout << "Veuillez repondre a ce questionniare." << std::endl;
-            //std::cout << std::endl << "Appuyer sur une touche pour continuer...";
             system("pause");
             ski.setPoidDescente (1);
-            //system("cls");
+            system("cls");
             int depart=0,arriver=0;
             do
             {
@@ -85,6 +83,7 @@ void menu(Graphe& ski)
             }
             while(depart < 1 || depart > 37 || arriver < 1 || arriver > 37 ||depart == arriver);
             system("cls");
+            //std::cout << "SHEEEEEE";
             ski.Dijkstra(depart-1,arriver-1,1);
             std::cout<<std::endl<<"0. Quitter"<<std::endl;int shee;do{std::cin >> shee;}while(shee != 0);
             break;
@@ -102,7 +101,7 @@ void menu(Graphe& ski)
         }
         }
     }
-    while(menu != 4);
+    while(menu != 5);
 }
 
 

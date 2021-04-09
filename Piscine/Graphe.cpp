@@ -181,7 +181,6 @@ void Graphe::setPoidDescente(int typeDescente)
                 }
                 while (P < 1 || P > 5);
                 pref.push_back(P);
-                ///ECRIRE DANS LE FICHIER
             }
             Personnage personnage(user,pref);
             personnageTot.push_back(personnage);
@@ -207,6 +206,7 @@ void Graphe::Dijkstra(int depart,int arriver,int affichage)
     int current = depart;
     int fin = arriver;
     std::vector <Sommet> listeChemin;
+    std::vector <Sommet> listeCheminFinal;
     listeChemin.push_back(*m_sommets[current]);
     Sommet pivot = listeChemin[0];
     int compteur=1;
@@ -286,6 +286,7 @@ void Graphe::Dijkstra(int depart,int arriver,int affichage)
         }
         ///on change le numero du current qui est le numero du sommet qui est entrain d'etre utilisé
         current = pivot.getNum()-1;
+        listeCheminFinal.push_back(pivot);
 
         ///TESTE/////////////////////////////////////////////////////////////////////////////////////////////////
         /*for (unsigned int i = 0 ; i < listeChemin.size() ; i++)
@@ -299,32 +300,10 @@ void Graphe::Dijkstra(int depart,int arriver,int affichage)
     if (affichage == 0)
     {
         std::cout << "tout les plus court chemin  a partir du point rentrer sont :" << std::endl;
-        for(unsigned int i = 0;  i < listeChemin.size() ; i++)
-        {
-            listeChemin[i].setVisiteToFalse();
-            //std::cout << listeChemin[i].getVisite();
-        }
         ///A REFAIRE LES 20 PROCHAINE LIGNES AFFICHES PAS LE BON TRUC
-        for(unsigned int i = 0;  i < listeChemin.size() ; i++)
+        for(unsigned int i = 0;  i < listeCheminFinal.size() ; i++)
         {
-            int compteur2 = 1;
-            pivot = listeChemin[i];
-            for(unsigned int j = 0 ; j <listeChemin.size() ; j++)
-            {
-                if(listeChemin[i].getVisite() == false && listeChemin[i].getNum() == listeChemin[j].getNum() && listeChemin[i].calculPoid(m_sommets) > listeChemin[j].calculPoid(m_sommets))
-                {
-                    pivot = listeChemin[j];
-                }
-                if(compteur2==1)
-                {
-                    pivot.afficherPred(m_sommets,m_aretes);
-                    compteur2 = 0;
-                }
-            }
-            /*if(compteur2==1){
-                pivot.afficherPred(m_sommets,m_aretes);
-                compteur2 = 0;}*/
-            setVisiteToTrueAll(listeChemin,pivot.getNum()+1);
+            listeCheminFinal[i].afficherPred(m_sommets,m_aretes);
         }
 
         std::cout << std::endl;
@@ -369,6 +348,11 @@ void Graphe::Dijkstra(int depart,int arriver,int affichage)
             pivot.afficherPred(m_sommets,m_aretes);
         }
     }
+    for(unsigned int i = 0;  i < m_sommets.size() ; i++)
+        {
+            m_sommets[i]->setVisiteToFalse();
+            m_sommets[i]->clearS();
+        }
 }
 
 void Graphe::BFS(int S0)

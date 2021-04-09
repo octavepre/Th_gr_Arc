@@ -96,7 +96,7 @@ void menu(Graphe& ski)
                 }
                 while(depart < 1 || depart > 37 || arriver < 1 || arriver > 37 ||depart == arriver);
                 system("cls");
-                //std::cout << "SHEEEEEE";
+                //  std::cout << "SHEEEEEE";
                 ski.Dijkstra(depart-1,arriver-1,1);
                 std::cout<<std::endl<<"0. Quitter"<<std::endl;
                 int shee;

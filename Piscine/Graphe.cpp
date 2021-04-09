@@ -42,7 +42,7 @@ Graphe::Graphe(std::string nomFichier)
 
 void Graphe::afficher()
 {
-    std::cout << "Lise des Sommets: " << std::endl;
+    std::cout << "Lise des Stations: " << std::endl;
     for(unsigned int i = 0 ; i < m_sommets.size() ; i++)
     {
         //std::cout << "      Arrete " << i+1;
@@ -69,12 +69,6 @@ void Graphe::setPoidDescente(int typeDescente)
     }
     case 1:///on tape le nom du compte a utiliser
     {
-        ///MODIFIER POUR DEMANDER LES LOGS DU MEC
-        ///MODIFIER POUR DEMANDER LES LOGS DU MEC
-        ///MODIFIER POUR DEMANDER LES LOGS DU MEC
-        ///MODIFIER POUR DEMANDER LES LOGS DU MEC
-        ///MODIFIER POUR DEMANDER LES LOGS DU MEC
-        ///MODIFIER POUR DEMANDER LES LOGS DU MEC
         std::ifstream ifs {"Logs.txt"};
         int P;
         std::vector <Personnage> personnageTot;

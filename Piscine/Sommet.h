@@ -70,7 +70,6 @@ private:
 public:
     Arete(int num,std::string nomTrajet,std::string type,Sommet* numero1,Sommet* numero2);
     int getNumSecond()const{return m_lien.second->getNum();}
-    void afficherA();
     void calculPoid(int typeDescente);
     int getPoid()const{return m_poid;}
     std::string getType() const {return m_type;}

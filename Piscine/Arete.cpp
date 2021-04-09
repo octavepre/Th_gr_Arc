@@ -15,6 +15,7 @@ void Arete::afficherA()
 void Arete::calculPoid(int typeDescente)///A diviser par 100 le poid
 {
     ///rajouter SURF
+    m_flow = 1000000;
     if (m_type == "V")///Verte
     {
         m_poid = (m_lien.first->getAltitude() - m_lien.second->getAltitude())*(5*60);///300s = 5 mn
@@ -38,22 +39,27 @@ void Arete::calculPoid(int typeDescente)///A diviser par 100 le poid
     else if (m_type == "TPH") ///Telephérique
     {
         m_poid = 4*60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(2*60);
+        m_flow = 1200; //EN SKIEUR/HEURE
     }
     else if (m_type == "TC") ///Telecabine
     {
         m_poid = 2*60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(3*60);
+        m_flow = 2200;
     }
     else if (m_type == "TSD")///Telesiege debrayable
     {
         m_poid = 1*60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(3*60);
+        m_flow = 2500;
     }
     else if (m_type == "TS") ///Telesiege
     {
         m_poid = 1*60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(4*60);
+        m_flow = 1800;
     }
     else if (m_type == "TK") ///Teleski
     {
         m_poid = 1*60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(4*60);
+        m_flow = 800;
     }
     else if (m_type == "BUS") ///Bus
     {
@@ -66,6 +72,7 @@ void Arete::calculPoid(int typeDescente)///A diviser par 100 le poid
         {
             m_poid = 30*60*100;
         }
+         m_flow = 300;
     }
     else if (m_type == "SURF")
     {
@@ -107,7 +114,7 @@ void Arete::calculPoid2(int P)///A diviser par 100 le
         }
         }
     }
-    if(m_type == "TPH" || m_type == "TC" || m_type == "TSD" || m_type == "TSD" || m_type == "TS" || m_type == "TK" || m_type == "BUS")
+    if(m_type == "TPH" || m_type == "TC" || m_type == "TSD" || m_type == "TS" || m_type == "TK" || m_type == "BUS")
     {
         switch(P)
         {

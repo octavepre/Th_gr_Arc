@@ -14,7 +14,6 @@ private:
     int m_altitude;
     std::vector <Arete*> m_succ;
     bool m_visite;
-
     std::vector <int> m_PoidCheminArete;///Inutile
     std::vector <int> m_chemin;
     std::vector <int> m_cheminArete;
@@ -64,6 +63,7 @@ private:
     int m_num;
     std::string m_trajet;
     int m_poid;
+    int m_flow;
     std::pair <Sommet*,Sommet*> m_lien;
     std::string m_type;
     bool m_utiliser;
@@ -78,6 +78,7 @@ public:
     int getNum()const{return m_num;}
     void calculPoid2(int P);
     std::string getNom(){return m_trajet;}
+    int getFlow(){return m_flow;}
 };
 
 #endif // SOMMET_H_INCLUDED

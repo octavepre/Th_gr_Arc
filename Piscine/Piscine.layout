@@ -4,21 +4,35 @@
 	<ActiveTarget name="Debug" />
 	<File name="Sommet.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
+<<<<<<< HEAD
 			<Cursor1 position="1365" topLine="24" />
 		</Cursor>
 	</File>
 	<File name="Sommet.h" open="1" top="1" tabpos="6" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="415" topLine="8" />
+=======
+			<Cursor1 position="1699" topLine="72" />
+		</Cursor>
+	</File>
+	<File name="Graphe.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="89" topLine="0" />
+>>>>>>> 29368168009f49841a838344e4d587d2eada149c
 		</Cursor>
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
+<<<<<<< HEAD
 			<Cursor1 position="2951" topLine="17" />
+=======
+			<Cursor1 position="2789" topLine="0" />
+>>>>>>> 29368168009f49841a838344e4d587d2eada149c
 		</Cursor>
 	</File>
 	<File name="Graphe.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
+<<<<<<< HEAD
 			<Cursor1 position="13838" topLine="335" />
 		</Cursor>
 	</File>
@@ -30,6 +44,19 @@
 	<File name="Arete.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="390" topLine="120" />
+=======
+			<Cursor1 position="10795" topLine="108" />
+		</Cursor>
+	</File>
+	<File name="Arete.cpp" open="1" top="1" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="998" topLine="39" />
+		</Cursor>
+	</File>
+	<File name="Sommet.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2076" topLine="40" />
+>>>>>>> 29368168009f49841a838344e4d587d2eada149c
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

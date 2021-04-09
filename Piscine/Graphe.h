@@ -22,10 +22,6 @@ public:
     void BFS(int S0);
     bool AllTrue(std::vector <Sommet> listeChemin)const;
     void setVisiteToTrueAll(std::vector <Sommet>& PleaseWork,int current);
-    /*std::string findTypeArreteMin(int SommetD, int SommetA, int poids);
-    int findPoidsArreteMin(int SommetD, int SommetA);
-    std::string findTypeArreteMin(int SommetD, int SommetA);
-    std::string findTypeArrete(int SommetD, int SommetA, int poids);*/
 };
 
 #endif // GRAPHE_H_INCLUDED

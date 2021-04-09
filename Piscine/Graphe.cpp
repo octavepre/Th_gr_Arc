@@ -182,6 +182,17 @@ void Graphe::setPoidDescente(int typeDescente)
                 while (P < 1 || P > 5);
                 pref.push_back(P);
             }
+            /*for (unsigned int i = 0; i < personnageTot.size() ; i++)
+            {
+                std::cout << personnageTot[i].getUser();
+                for (int j = 0 ; j < 12 ; j++)
+                {
+                    std::cout << std::endl;
+                    std::cout << personnageTot[i].getPref(j);
+                }
+            }
+            system("pause");*/
+            personnageTot.pop_back();
             Personnage personnage(user,pref);
             personnageTot.push_back(personnage);
             for (unsigned int i = 0; i < personnageTot.size() ; i++)
@@ -192,8 +203,8 @@ void Graphe::setPoidDescente(int typeDescente)
                 {
                     ofs << std::endl;
                     ofs << personnageTot[i].getPref(j);
-                    ofs << std::endl;
                 }
+                ofs << std::endl;
             }
             break;
         }

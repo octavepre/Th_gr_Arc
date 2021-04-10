@@ -14,10 +14,10 @@ private:
     std::vector <Arete*> m_aretes;
     int m_ordre;
     std::vector<std::vector<int>> m_matAdjacence;
+    bool m_utiliser;
 public:
     Graphe(std::string nomFichier);
     void afficher();
-
     void setPoidDescente(int typeDescente);
     void Dijkstra(int depart,int arriver,int affichage);
     void BFS(int S0);
@@ -28,6 +28,9 @@ public:
     int findPoidsArreteMin(int SommetD, int SommetA);
     std::string findTypeArreteMin(int SommetD, int SommetA);
     std::string findTypeArrete(int SommetD, int SommetA, int poids);*/
+    void setUtiliserToTrue(){m_utiliser = true;}
+    void setUtiliserToFalse(){m_utiliser = false;}
+    bool getUtiliser()const{return m_utiliser;}
 };
 
 #endif // GRAPHE_H_INCLUDED

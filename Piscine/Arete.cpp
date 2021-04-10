@@ -6,10 +6,7 @@ Arete::Arete(int num,std::string nomTrajet,std::string type,Sommet* numero1,Somm
     m_lien = std::make_pair(numero1,numero2);
 }
 
-void Arete::afficherA()
-{
 
-}
 
 ///Pas besoin de type descente
 void Arete::calculPoid(int typeDescente)///A diviser par 100 le poid
@@ -99,7 +96,7 @@ void Arete::calculPoid2(int P)///A diviser par 100 le
         }
         case 3:
         {
-            m_poid = 5;
+            m_poid = 6;
             break;
         }
         case 4:
@@ -120,7 +117,7 @@ void Arete::calculPoid2(int P)///A diviser par 100 le
         {
         case 1:
         {
-            m_poid = 10000000;
+            m_poid = 10000000*1.5;
             break;
         }
         case 2:
@@ -130,7 +127,7 @@ void Arete::calculPoid2(int P)///A diviser par 100 le
         }
         case 3:
         {
-            m_poid = 5*1.5;
+            m_poid = 6*1.5;
             break;
         }
         case 4:

@@ -9,7 +9,7 @@ void Sommet::addSucc(Arete* succ)
 
 void Sommet::afficherS()
 {
-    std::cout << "Sommet " << getNom() << " : ";
+    std::cout << "Station " << getNom() << " : ";
     for(unsigned int i = 0 ; i < m_succ.size() ; i++)
     {
         std::cout<<std::endl;
@@ -70,6 +70,7 @@ int Sommet::getPoidPred(int num,int numArete)
 void Sommet::afficherPred(std::vector <Sommet*> m_sommet,std::vector <Arete*> m_aretes)
 {
     std::cout << getNum() << "<---";
+
     for(unsigned int i = 0; i <m_chemin.size() ; i++)
     {
         if(i<m_chemin.size()-1){
@@ -93,6 +94,10 @@ void Sommet::setPrede(Sommet* b)
     }
 }
 
+void Sommet::restorePrede()
+{
+    m_predecesseur.clear();
+}
 
 
 int Sommet::getPoid(int i)const{return m_succ[i]->getPoid();}

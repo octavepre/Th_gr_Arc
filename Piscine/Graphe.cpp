@@ -340,6 +340,69 @@ void Graphe::BFS(int S0)
     }
 }
 
+
+void Graphe::CreaMatriceAdja()
+{
+    std::vector<std::vector<int>> mat;
+    std::vector<int> vect;
+    std::vector<int> entree;
+    int i=0;
+    while(i<m_ordre)
+    {
+        int j=0;
+        while(j<m_ordre)
+        {
+            entree.push_back(0) ;
+            j++;
+        }
+        mat.push_back(entree);
+        entree.clear();
+        i++;
+    }
+    for(int i(0); i<mat.size(); i++)
+    {
+
+        m_sommets[i]->getSuc(&vect);
+        /*for(int j(0); j<vect.size(); j++)
+        {
+            std::cout <<std::endl;
+            std::cout << " Remonter : "<<std::endl;
+            std::cout <<vect[j]<<std::endl;
+        }¨*/
+        for(int j(0); j<vect.size(); j++)
+        {
+            if(mat[i][vect[j]-1]>=0)
+            {
+                mat[i][vect[j]-1]++;
+                std::cout << "i :" << i+1 << "j :" << vect[j] << " = " <<  mat[i][vect[j]-1] << std::endl;
+            }
+            if(mat[i][vect[j]-1] == -1)
+            {
+                mat[i][vect[j]-1] = 1;
+                std::cout << "i :" << i+1 << "j :" << vect[j] << " = " <<  mat[i][vect[j]-1] << std::endl;
+            }
+            //std::cout << "i :" << i << "j :" << vect[j] << " = " <<  mat[i][vect[j]] << std::endl;
+            if(mat[vect[j]-1][i]==0)
+            {
+                mat[vect[j]-1][i] = -1;
+                std::cout << "i :" << i+1 << "j :" << vect[j] << " = " <<  mat[vect[j]-1][i] << std::endl;
+            }
+            //std::cout << "i :" << i << "j :" << vect[j] << " = " <<  mat[vect[j]][i] << std::endl;
+        }
+        vect.clear();
+    }
+    std::cout << std::endl;
+    for(int k(0); k<mat.size(); k++)
+    {
+        for(int l(0); l<mat[k].size(); l++)
+        {
+            std::cout << mat[k][l] << " | ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+
 bool Graphe::AllTrue(std::vector <Sommet> listeChemin)const
 {
 

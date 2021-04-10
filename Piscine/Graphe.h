@@ -13,6 +13,7 @@ private:
     std::vector <Sommet*> m_sommets;
     std::vector <Arete*> m_aretes;
     int m_ordre;
+    std::vector<std::vector<int>> m_matAdjacence;
 public:
     Graphe(std::string nomFichier);
     void afficher();
@@ -22,6 +23,7 @@ public:
     void BFS(int S0);
     bool AllTrue(std::vector <Sommet> listeChemin)const;
     void setVisiteToTrueAll(std::vector <Sommet>& PleaseWork,int current);
+    void CreaMatriceAdja();
     /*std::string findTypeArreteMin(int SommetD, int SommetA, int poids);
     int findPoidsArreteMin(int SommetD, int SommetA);
     std::string findTypeArreteMin(int SommetD, int SommetA);

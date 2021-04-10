@@ -17,7 +17,6 @@ private:
     std::vector <int> m_PoidCheminArete;///Inutile
     std::vector <int> m_chemin;
     std::vector <int> m_cheminArete;
-
     int m_state;
     std::vector<Sommet*>m_predecesseur;
 
@@ -53,6 +52,7 @@ public:
     void setPrede(Sommet* b);
     std::vector<Sommet*> getPrede()const{return m_predecesseur;}
     void setVisiteToFalse(){m_visite = false;}
+    void getSuc(std::vector<int>* suc);
 };
 
 class Arete

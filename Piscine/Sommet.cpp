@@ -18,6 +18,15 @@ void Sommet::afficherS()
     std::cout<<std::endl;
 }
 
+void Sommet::getSuc(std::vector<int>* suc)
+{
+    for(unsigned int i = 0 ; i < m_succ.size() ; i++)
+    {
+        std::cout << m_succ[i]->getNumSecond() << " ";
+        suc->push_back(m_succ[i]->getNumSecond());
+    }
+}
+
 int Sommet::getSuccNum(int i)
 {
     return m_succ[i]->getNumSecond();

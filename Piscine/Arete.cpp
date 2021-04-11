@@ -10,6 +10,7 @@ Arete::Arete(int num,std::string nomTrajet,std::string type,Sommet* numero1,Somm
 
 void Arete::calculPoid(int typeDescente)///Permet de calculer le temps pour chaque piste en seconde*100
 {
+    m_flow = 1000000;
     if (m_type == "V")///Verte
     {
         m_poid = (m_lien.first->getAltitude() - m_lien.second->getAltitude())*(5*60);///300s = 5 mn
@@ -38,18 +39,22 @@ void Arete::calculPoid(int typeDescente)///Permet de calculer le temps pour chaq
     else if (m_type == "TC") ///Telecabine
     {
         m_poid = 2*60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(3*60);
+        m_flow = 2200;
     }
     else if (m_type == "TSD")///Telesiege debrayable
     {
         m_poid = 1*60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(3*60);
+        m_flow = 2500;
     }
     else if (m_type == "TS") ///Telesiege
     {
         m_poid = 1*60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(4*60);
+        m_flow = 1800;
     }
     else if (m_type == "TK") ///Teleski
     {
         m_poid = 1*60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(4*60);
+        m_flow = 800;
     }
     else if (m_type == "BUS") ///Bus
     {
@@ -62,6 +67,7 @@ void Arete::calculPoid(int typeDescente)///Permet de calculer le temps pour chaq
         {
             m_poid = 30*60*100;
         }
+        m_flow = 300;
     }
     else if (m_type == "SURF")
     {

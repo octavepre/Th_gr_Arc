@@ -17,7 +17,6 @@ private:
     std::vector <int> m_PoidCheminArete;
     std::vector <int> m_chemin;
     std::vector <int> m_cheminArete;
-
     int m_state;
     std::vector<Sommet*>m_predecesseur;
     std::vector<Arete*>m_predecesseurA;
@@ -55,14 +54,15 @@ public:
     std::vector<Sommet*> getPrede()const{return m_predecesseur;}
     std::vector<Arete*> getPredeA()const;
     void setVisiteToFalse(){m_visite = false;}
-    void getSuc(std::vector<int>* suc);
+    void getSuc(std::vector<int>* suc,std::vector<int>* flo);
     void restorePrede();
     void clearS(){m_chemin.clear();m_cheminArete.clear();m_PoidCheminArete.clear();}
     void ClearSucc(){m_succ.clear();}
-    int getFlow(int i)const;
+    int getFlow(int S)const;
     void setPrede2(Sommet* b,Arete* a);
     Arete* getSucc(int i);
     int flowMax();
+    void setFlow(int S,int B);
 };
 
 class Arete
@@ -85,7 +85,7 @@ public:
     int getNum()const{return m_num;}
     void calculPoid2(int P);
     std::string getNom(){return m_trajet;}
-    int getFlow(){return m_flow;}
+    int getFlo(){return m_flow;}
     void setPoid(int poid){m_poid = poid;}
     void setFlow(int flow){m_flow = flow;}
     void calculFlow();

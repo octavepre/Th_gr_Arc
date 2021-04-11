@@ -138,8 +138,9 @@ void menu(Graphe& ski)
 
             ///https://www.youtube.com/watch?v=GoVjOT30xwo&ab_channel=QuinstonPimenta
             ///Pour les flots je me suis inspiré de ca
-            ski.Clear(source-1,puit-1);
-            //ski.Flot(source-1,puit-1);
+            //ski.Clear(source-1,puit-1);
+            ski.Flot(source,puit);
+            std::cout << std::endl;
             system("pause");
             break;
         }
@@ -147,6 +148,8 @@ void menu(Graphe& ski)
         {
             system("cls");
             std::cout << "SHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
+            //ski.BFS2(2,6);
+            system("pause");
             break;
         }
         }

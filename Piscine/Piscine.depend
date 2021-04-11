@@ -49,30 +49,31 @@
 1617615062 source:c:\users\octaveprevot\desktop\piscine\sommet.cpp
 	"Sommet.h"
 
-1618062830 source:c:\users\octaveprevot\desktop\th_gr_arc\piscine\arete.cpp
+1618156408 source:c:\users\octaveprevot\desktop\th_gr_arc\piscine\arete.cpp
 	"Sommet.h"
 
-1618062931 c:\users\octaveprevot\desktop\th_gr_arc\piscine\sommet.h
+1618166237 c:\users\octaveprevot\desktop\th_gr_arc\piscine\sommet.h
 	<iostream>
 	<vector>
 	<algorithm>
 
-1618062830 source:c:\users\octaveprevot\desktop\th_gr_arc\piscine\graphe.cpp
+1618167971 source:c:\users\octaveprevot\desktop\th_gr_arc\piscine\graphe.cpp
 	"Graphe.h"
 	"Personnage.h"
 
-1618062956 c:\users\octaveprevot\desktop\th_gr_arc\piscine\graphe.h
+1618162978 c:\users\octaveprevot\desktop\th_gr_arc\piscine\graphe.h
 	<vector>
 	<queue>
 	"Sommet.h"
 	<fstream>
+	<algorithm>
 
-1618052770 source:c:\users\octaveprevot\desktop\th_gr_arc\piscine\main.cpp
+1618167119 source:c:\users\octaveprevot\desktop\th_gr_arc\piscine\main.cpp
 	<iostream>
 	"Graphe.h"
 	"Sommet.h"
 
-1618062830 source:c:\users\octaveprevot\desktop\th_gr_arc\piscine\sommet.cpp
+1618166281 source:c:\users\octaveprevot\desktop\th_gr_arc\piscine\sommet.cpp
 	"Sommet.h"
 
 1617706554 source:c:\users\sacco\desktop\piscine\th_gr_arc\piscine\arete.cpp

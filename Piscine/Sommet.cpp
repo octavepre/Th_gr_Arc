@@ -20,12 +20,14 @@ void Sommet::afficherS()
 }
 
 ///permet de recuperer les succ
-void Sommet::getSuc(std::vector<int>* suc)
+void Sommet::getSuc(std::vector<int>* suc, std::vector<int>* flo)
 {
     for(unsigned int i = 0 ; i < m_succ.size() ; i++)
     {
-        std::cout << m_succ[i]->getNumSecond() << " ";
+        //std::cout << m_succ[i]->getNumSecond() << " ";
         suc->push_back(m_succ[i]->getNumSecond());
+        //std::cout << m_succ[i]->getFlow() << " " ;
+        flo->push_back(m_succ[i]->getFlo());
     }
 }
 
@@ -39,7 +41,6 @@ int Sommet::getSuccNum(int i)
 ///calcul le poid avec les predecesseur dans dijkstra
 int Sommet::calculPoid(std::vector <Sommet*> m_sommet)
 {
-
     int Totale = 0;
     for (int i = 0 ; i < m_chemin.size()-1 ; i++)
     {
@@ -132,16 +133,16 @@ int Sommet::flowMax()
 
     for(unsigned int i = 0; i < m_predecesseurA.size() ; i ++)
     {
-        if(pivot->getFlow() > m_predecesseurA[i]->getFlow())
+        if(pivot->getFlo() > m_predecesseurA[i]->getFlo())
         {
             //std::cout << pivot->getFlow() << std::endl;
             pivot = m_predecesseurA[i];
         }
     }
-    Max = pivot->getFlow();
+    Max = pivot->getFlo();
     for(unsigned int i = 0; i < m_predecesseurA.size() ; i ++)
     {
-        m_predecesseurA[i]->MoinsFlow(pivot->getFlow());
+        m_predecesseurA[i]->MoinsFlow(pivot->getFlo());
     }
     //std::cout << "[" << Max << "]" << std::endl;
     return Max;
@@ -151,4 +152,25 @@ int Sommet::getPoid(int i)const{return m_succ[i]->getPoid();}
 int Sommet::size_poidPred()const{return m_PoidCheminArete.size();}
 int Sommet::getPoidChemin(int i)const{return m_PoidCheminArete[i];}
 int Sommet::getNumArete(int i)const{return m_succ[i]->getNum();}
-int Sommet::getFlow(int i)const{return m_succ[i]->getFlow();}
+
+int Sommet::getFlow(int S)const
+{
+    for (int i(0); i<m_succ.size() ; i++)
+    {
+        if(m_succ[i]->getNumSecond() == S)
+        {
+            return m_succ[i]->getFlo();
+        }
+    }
+}
+
+void Sommet::setFlow(int S,int B)
+{
+    for (int i(0); i<m_succ.size() ; i++)
+    {
+        if(m_succ[i]->getNumSecond() == S)
+        {
+            m_succ[i]->setFlow(B);
+        }
+    }
+}

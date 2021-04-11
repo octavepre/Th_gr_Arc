@@ -351,7 +351,6 @@ void Graphe::Dijkstra(int depart,int arriver,int affichage)
 
 void Graphe::BFS(int S0)
 {
-
     std::queue<Sommet*>fil; ///declaration Premiere file
     std::queue<Sommet*>fifi; /// declaration Deuxieme file pour stocker les predecesseur de chaque terme de la premiere
     Sommet* sommet_b = m_sommets[S0]; /// initialisation Sommet initial
@@ -419,6 +418,7 @@ void Graphe::CreaMatriceAdja()
 {
     std::vector<std::vector<int>> mat;
     std::vector<int> vect;
+    std::vector<int> flow;
     std::vector<int> entree;
     int i=0;
     while(i<m_ordre)
@@ -436,34 +436,13 @@ void Graphe::CreaMatriceAdja()
     for(int i(0); i<mat.size(); i++)
     {
 
-        m_sommets[i]->getSuc(&vect);
-        /*for(int j(0); j<vect.size(); j++)
-        {
-            std::cout <<std::endl;
-            std::cout << " Remonter : "<<std::endl;
-            std::cout <<vect[j]<<std::endl;
-        }¨*/
+        m_sommets[i]->getSuc(&vect,&flow);
         for(int j(0); j<vect.size(); j++)
         {
-            if(mat[i][vect[j]-1]>=0)
-            {
-                mat[i][vect[j]-1]++;
-                std::cout << "i :" << i+1 << "j :" << vect[j] << " = " <<  mat[i][vect[j]-1] << std::endl;
-            }
-            if(mat[i][vect[j]-1] == -1)
-            {
-                mat[i][vect[j]-1] = 1;
-                std::cout << "i :" << i+1 << "j :" << vect[j] << " = " <<  mat[i][vect[j]-1] << std::endl;
-            }
-            //std::cout << "i :" << i << "j :" << vect[j] << " = " <<  mat[i][vect[j]] << std::endl;
-            if(mat[vect[j]-1][i]==0)
-            {
-                mat[vect[j]-1][i] = -1;
-                std::cout << "i :" << i+1 << "j :" << vect[j] << " = " <<  mat[vect[j]-1][i] << std::endl;
-            }
-            //std::cout << "i :" << i << "j :" << vect[j] << " = " <<  mat[vect[j]][i] << std::endl;
+            mat[i][vect[j]-1] = flow[j];
         }
         vect.clear();
+        flow.clear();
     }
     std::cout << std::endl;
     for(int k(0); k<mat.size(); k++)
@@ -528,64 +507,120 @@ void Graphe::Clear(int source,int puit)
     }
     for (unsigned int i = 0 ; i < m_aretes.size() ; i++)
     {
-        std::cout << m_aretes[i]->getNum() << " " <<m_aretes[i]->getNumFirst()<< ":" << m_aretes[i]->getNumSecond() << "  " << m_aretes[i]->getFlow() << std::endl;
+        std::cout << m_aretes[i]->getNum() << " " <<m_aretes[i]->getNumFirst()<< ":" << m_aretes[i]->getNumSecond() << "  " << m_aretes[i]->getFlo() << std::endl;
     }
 }
 
 ///MARCHE PAS
 void Graphe::Flot(int source,int puit)
 {
-    Clear(source,puit);
+    //Clear(source-1,puit-1);
     int flotMax = 0;
-
-    while(BFS2(source,puit))
+    int flow = 0;
+    do
     {
         ///faire les calculs des nouveaux flot et tout
         //std::cout << "TERMINEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEER"<< std::endl;
-        flotMax = flotMax + m_sommets[puit]->flowMax();
+        flow = BFS2(source,puit);
+        flotMax = flotMax + flow;
+    }while(flow != 0);
+    if(flotMax < 1000000)
+    {
+        std::cout << "Le flot maximale est : " << flotMax;
     }
-
-    std::cout << "Le flot maximale est : " << flotMax;
-}
-
-///MARCHE PAS
-bool Graphe::BFS2(int source,int puit)
-{
+    else
+    {
+        std::cout << "On peut relier les 2 points en utilisant que des pistes. Il n'y a pas donc de flot maximal a proprement parler"<< std::endl;
+        std::cout << "Le flot maximale est (selon les calculs avec les pistes a flow de 1'000'000) : " << flotMax << std::endl;
+    }
+    std::cout << std::endl;
+    for (unsigned int i = 0 ; i < m_aretes.size() ; i++)
+    {
+        m_aretes[i]->calculFlow();
+    }
     for (unsigned int i = 0 ; i < m_sommets.size(); i ++)
     {
-        m_sommets[i]->setVisiteToFalse();
+        m_sommets[i]->setState(0);
         m_sommets[i]->restorePrede();
     }
-    int current = source;
-    std::queue <Sommet*> fil;
-    m_sommets[current]->setVisiteToTrue();
-    fil.push(m_sommets[current]);
-    while(!fil.empty())
+}
+
+int Graphe::BFS2(int source,int puit)
+{
+    std::queue<Sommet*>fil; ///declaration Premiere file
+    std::queue<Sommet*>fifi; /// declaration Deuxieme file pour stocker les predecesseur de chaque terme de la premiere
+    std::vector<Sommet*>Trajet;
+    //std::vector<Sommet*>Mini;
+    Sommet* sommet_b = m_sommets[source-1]; /// initialisation Sommet initial
+    Sommet* sommet_fin = m_sommets[puit-1];
+    sommet_fin->ClearSucc();
+    fil.push(sommet_b); /// Enfilage du Premier sommet
+    fifi.push(sommet_b); ///Enfilage du Premier sommet
+    sommet_b->setState(1); /// On grise le premier sommet
+    int Minflow=0;
+    while(fil.size() != 0) /// Tant que la file est non nulle
     {
-        Sommet* pivot = fil.front();
-        ///ajoute les successeurs
-        for(unsigned int i = 0; i < pivot->size_succ(); i++)
+        Sommet* s = fil.front();/// On affecte au pointeur de sommet s la valeur du la premiere valaur de la file pour pouvoir le manipuler
+        //std::vector<Sommet*>Suc = m_sommets[s->getSuccNum()]; // On recupeur les successeur de s
+        for(unsigned int i = 0 ; i < m_sommets[s->getNum()-1]->size_succ() ; i++)
         {
-            int transition = pivot->getSuccNum(i)-1;
-            if(m_sommets[transition]->getVisite() == false && m_sommets[current]->getFlow(i) != 0)///LE PROBLEMES EST LO
+            int transition = m_sommets[s->getNum()-1]->getSuccNum(i)-1;
+            /*std::cout << m_sommets[s->getNum()-1]->getNum() << " et " << transition+1 << " : ";
+            std::cout << m_sommets[s->getNum()-1]->getFlow(transition+1) << " " << std::endl;*/
+            if(m_sommets[transition]->getState()==0 && m_sommets[s->getNum()-1]->getFlow(transition+1)>0) /// On verifie que ces sommets n'aient pas été deja parcouru
             {
-                Arete* arete = pivot->getSucc(i);
-                m_sommets[transition]->setVisiteToTrue();
-                fil.push(m_sommets[transition]);
-                m_sommets[transition]->setPrede2(pivot,arete);
-
-                //std::cout << pivot->getSuccNum(i);///TESTE
-                //std::cout << arete->getType() << std::endl;///TESTE
-
-                if(m_sommets[transition]->getNum() == puit + 1)
-                {
-                    std::cout << "je rentre";
-                    return true;
-                }
+                Minflow = 10000000;
+                fil.push(m_sommets[transition]); ///On enfile j (successeur de s)
+                fifi.push(m_sommets[transition]); ///On enfile j (successeur de s) dans la 2eme file
+                m_sommets[transition]->setState(1); /// On grise j
+                m_sommets[transition]->setPrede(s); /// On Transmets les predecesseur de s en tant que predecesseur de j et on ajoute s au predecesseur de j
             }
         }
-        fil.pop();
+        s->setState(2); /// On noircit s
+        fil.pop(); /// on supprime le Premiere element de la file
     }
-    //std::cout << "je rentre";
-    return false;
+    int compt = 0;
+    while(fifi.front() != sommet_fin) /// Tant que la file d'affichage n'est pas vide
+    {
+        compt++;
+        fifi.pop();
+        if (compt>36)
+        {
+            return 0;
+        }
+    }
+    ///Boucle d'affichage dans l'ordre de decouverte des sommets
+    //std::cout<< fifi.front()->getNum(); /// On affiche la file complete du BFS avec l'ordre d'apparition
+    Trajet.push_back(fifi.front());
+    std::vector<Sommet*> Pred = fifi.front()->getPrede();
+    //Sommet* s = fifi.front();
+    for(size_t i(0); i<Pred.size(); i++)
+    {
+        Trajet.push_back(Pred[i]);
+        //std::cout<< "<--" << Pred[i]->getNum();
+    }
+    for(size_t i(0); i<Trajet.size()-1; i++)
+    {
+        std::cout<< Trajet[i]->getNum() << " <-- ";
+        if(Minflow > Trajet[i+1]->getFlow(Trajet[i]->getNum()))
+       {
+           Minflow = Trajet[i+1]->getFlow(Trajet[i]->getNum());
+       }
+    }
+    std::cout<< Trajet[Trajet.size()-1]->getNum() << " <-- " << std::endl;
+    for(size_t i(0); i<Trajet.size()-1; i++)
+    {
+        Trajet[i+1]->setFlow(Trajet[i]->getNum(),Trajet[i+1]->getFlow(Trajet[i]->getNum())-Minflow);
+    }
+    for (unsigned int i = 0 ; i < m_sommets.size(); i ++)
+    {
+        m_sommets[i]->setState(0);
+        m_sommets[i]->restorePrede();
+    }
+    if(Trajet.size()==1)//Dernière verification qui enleve un grand nombre de boucle inutile donc de fausse les scores
+    {
+        Minflow = 0;
+    }
+    std::cout<<"Le flot mini est " << Minflow << std::endl;
+    return Minflow;
 }

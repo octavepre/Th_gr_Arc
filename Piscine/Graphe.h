@@ -30,7 +30,8 @@ public:
     bool getUtiliser()const{return m_utiliser;}
     void Clear(int source,int puit);
     void Flot(int source,int puit);
-    bool BFS2(int source,int puit);
+    //bool BFS2(int source,int puit);
+    int BFS2(int source,int puit);
 };
 
 #endif // GRAPHE_H_INCLUDED

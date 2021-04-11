@@ -14,11 +14,13 @@ private:
     int m_altitude;
     std::vector <Arete*> m_succ;
     bool m_visite;
-    std::vector <int> m_PoidCheminArete;///Inutile
+    std::vector <int> m_PoidCheminArete;
     std::vector <int> m_chemin;
     std::vector <int> m_cheminArete;
+
     int m_state;
     std::vector<Sommet*>m_predecesseur;
+    std::vector<Arete*>m_predecesseurA;
 
 public:
     Sommet(int num,std::string nomLieu,int altitude);
@@ -51,10 +53,16 @@ public:
     int getPredArete(int i){return m_cheminArete[i];}
     void setPrede(Sommet* b);
     std::vector<Sommet*> getPrede()const{return m_predecesseur;}
+    std::vector<Arete*> getPredeA()const;
     void setVisiteToFalse(){m_visite = false;}
     void getSuc(std::vector<int>* suc);
     void restorePrede();
     void clearS(){m_chemin.clear();m_cheminArete.clear();m_PoidCheminArete.clear();}
+    void ClearSucc(){m_succ.clear();}
+    int getFlow(int i)const;
+    void setPrede2(Sommet* b,Arete* a);
+    Arete* getSucc(int i);
+    int flowMax();
 };
 
 class Arete
@@ -78,6 +86,10 @@ public:
     void calculPoid2(int P);
     std::string getNom(){return m_trajet;}
     int getFlow(){return m_flow;}
+    void setPoid(int poid){m_poid = poid;}
+    void setFlow(int flow){m_flow = flow;}
+    void calculFlow();
+    void MoinsFlow(int flow){m_flow = m_flow - flow;}
 };
 
 #endif // SOMMET_H_INCLUDED

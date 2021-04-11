@@ -8,11 +8,8 @@ Arete::Arete(int num,std::string nomTrajet,std::string type,Sommet* numero1,Somm
 
 
 
-///Pas besoin de type descente
-void Arete::calculPoid(int typeDescente)///A diviser par 100 le poid
+void Arete::calculPoid(int typeDescente)///Permet de calculer le temps pour chaque piste en seconde*100
 {
-    ///rajouter SURF
-    m_flow = 1000000;
     if (m_type == "V")///Verte
     {
         m_poid = (m_lien.first->getAltitude() - m_lien.second->getAltitude())*(5*60);///300s = 5 mn
@@ -41,22 +38,18 @@ void Arete::calculPoid(int typeDescente)///A diviser par 100 le poid
     else if (m_type == "TC") ///Telecabine
     {
         m_poid = 2*60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(3*60);
-        m_flow = 2200;
     }
     else if (m_type == "TSD")///Telesiege debrayable
     {
         m_poid = 1*60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(3*60);
-        m_flow = 2500;
     }
     else if (m_type == "TS") ///Telesiege
     {
         m_poid = 1*60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(4*60);
-        m_flow = 1800;
     }
     else if (m_type == "TK") ///Teleski
     {
         m_poid = 1*60 + (m_lien.second->getAltitude() - m_lien.first->getAltitude())*(4*60);
-        m_flow = 800;
     }
     else if (m_type == "BUS") ///Bus
     {
@@ -69,7 +62,6 @@ void Arete::calculPoid(int typeDescente)///A diviser par 100 le poid
         {
             m_poid = 30*60*100;
         }
-         m_flow = 300;
     }
     else if (m_type == "SURF")
     {
@@ -77,7 +69,7 @@ void Arete::calculPoid(int typeDescente)///A diviser par 100 le poid
     }
 }
 
-void Arete::calculPoid2(int P)///A diviser par 100 le
+void Arete::calculPoid2(int P)///Change le poid des aretes selon les preference du user
 {
     if(m_type == "V" || m_type == "B" || m_type == "R" || m_type == "N" || m_type == "KL" || m_type == "SURF")
     {
@@ -86,12 +78,12 @@ void Arete::calculPoid2(int P)///A diviser par 100 le
         {
         case 1:
         {
-            m_poid = 10000000;
+            m_poid = 10000000;///Quand c'est pas empreintable on met un nombre tres elever
             break;
         }
         case 2:
         {
-            m_poid = 20;
+            m_poid = 20;///on reduit au fur et a mesur
             break;
         }
         case 3:
@@ -113,7 +105,7 @@ void Arete::calculPoid2(int P)///A diviser par 100 le
     }
     if(m_type == "TPH" || m_type == "TC" || m_type == "TSD" || m_type == "TS" || m_type == "TK" || m_type == "BUS")
     {
-        switch(P)
+        switch(P)///on multiplie les valeur precedente pas 1.5 pour rajouter un aspect negatif au remonter
         {
         case 1:
         {
@@ -144,4 +136,37 @@ void Arete::calculPoid2(int P)///A diviser par 100 le
     }
 }
 
+
+void Arete::calculFlow()///permet de calculer flot
+{
+    if(m_type == "V" || m_type == "B" || m_type == "R" || m_type == "N" || m_type == "KL" || m_type == "SURF")///pour les piste on met un flot "illimité"
+    {
+        m_flow = 1000000;
+    }
+    ///pour le remonter on rentre les valeur de la consigne
+    if(m_type == "TPH")
+    {
+        m_flow = 1200;
+    }
+    if(m_type == "TC")
+    {
+        m_flow = 2200;
+    }
+    if(m_type == "TSD")
+    {
+        m_flow = 2500;
+    }
+    if(m_type == "TS")
+    {
+        m_flow = 1800;
+    }
+    if(m_type == "TK")
+    {
+        m_flow = 800;
+    }
+    if(m_type == "BUS")
+    {
+        m_flow = 300;
+    }
+}
 

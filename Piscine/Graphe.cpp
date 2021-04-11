@@ -18,6 +18,7 @@ Graphe::Graphe(std::string nomFichier)
         throw std::runtime_error( "Impossible d'ouvrir en lecture " + nomFichier );
     m_ordre=0;
     ifs >> m_ordre;
+    ///on recupere l'ordre et on charge les sommets
     for (int i = 0 ; i < m_ordre ; i++)
     {
         int num=0, altitude=0;
@@ -27,6 +28,7 @@ Graphe::Graphe(std::string nomFichier)
         m_sommets.push_back(sommet);///LE NUMERO 0 DU VECTOR EST LE NUMERO 1 DES SOMMETS
     }
     int tailleArete=0;
+    ///on leur ajoute leurs arete successeur
     ifs >> tailleArete;
     for(int i = 0 ; i<tailleArete ; i++)
     {
@@ -59,7 +61,7 @@ void Graphe::setPoidDescente(int typeDescente)
 {
     switch (typeDescente)
     {
-    case 0:
+    case 0:///pour le temps par default
     {
         for(unsigned int i = 0 ; i < m_aretes.size() ; i++)
         {
@@ -73,7 +75,7 @@ void Graphe::setPoidDescente(int typeDescente)
         int P;
         std::vector <Personnage> personnageTot;
         std::string username;
-        while(ifs)
+        while(ifs)                      ///On recupere tout les user dans le fichier
         {
             std::string user;
             std::vector <int> pref;
@@ -90,7 +92,7 @@ void Graphe::setPoidDescente(int typeDescente)
         }
         std::cout << "Rentrez votre username." << std::endl;
         std::cin >> username;
-        for(unsigned int i = 0 ; i < personnageTot.size() ; i++)
+        for(unsigned int i = 0 ; i < personnageTot.size() ; i++)   /// on va chercher le username qui a été remplie
         {
             if(personnageTot[i].getUser() == username)
             {
@@ -100,7 +102,7 @@ void Graphe::setPoidDescente(int typeDescente)
                     P = personnageTot[i].getPref(k);
                     for (unsigned int j = 0 ; j < m_aretes.size() ; j++)
                     {
-                        m_aretes[j]->calculPoid2(P);
+                        m_aretes[j]->calculPoid2(P); ///si on trouve cette user on recalcul les poid en fonction de ses préférence
                     }
                 }
             }
@@ -113,7 +115,7 @@ void Graphe::setPoidDescente(int typeDescente)
         //std::ofstream ofs {"Logs.txt"};
         std::ifstream ifs {"Logs.txt"};
         std::vector <Personnage> personnageTot;
-        while(ifs)
+        while(ifs)          ///on recupere tout les user dans le fichier
         {
             std::string user;
             std::vector <int> pref;
@@ -135,7 +137,7 @@ void Graphe::setPoidDescente(int typeDescente)
         std::vector <int> pref;
         std::cin >> user;
         //Personnage personnage(user);
-        for (int i = 0 ; i < 12; i++)
+        for (int i = 0 ; i < 12; i++) /// on en crée un nouveau avec des preference differente a partir de question
         {
             system("cls");
             int P = 0;
@@ -172,20 +174,11 @@ void Graphe::setPoidDescente(int typeDescente)
             while (P < 1 || P > 5);
             pref.push_back(P);
         }
-        /*for (unsigned int i = 0; i < personnageTot.size() ; i++)
-        {
-            std::cout << personnageTot[i].getUser();
-            for (int j = 0 ; j < 12 ; j++)
-            {
-                std::cout << std::endl;
-                std::cout << personnageTot[i].getPref(j);
-            }
-        }
-        system("pause");*/
+
         personnageTot.pop_back();
         Personnage personnage(user,pref);
-        personnageTot.push_back(personnage);
-        for (unsigned int i = 0; i < personnageTot.size() ; i++)
+        personnageTot.push_back(personnage); ///on l'ajoute au user Totaux
+        for (unsigned int i = 0; i < personnageTot.size() ; i++) ///qu'on vient réecrire dans le fichier
         {
             //std::cout << personnageTot[i].getUser();
             ofs << personnageTot[i].getUser();
@@ -228,15 +221,15 @@ void Graphe::Dijkstra(int depart,int arriver,int affichage)
                 preservationPred.push_numArete(numArete);
                 preservationPred.push_poidPred(poid);
                 preservationPred.push_pred(m_sommets[current]->getNum());
-                for (int i = 0; i < pivot.size_predArete() ; i++)
+                for (int i = 0; i < pivot.size_predArete() ; i++)///on enregistre les arete par lesquel on passe
                 {
                     preservationPred.push_numArete(pivot.getPredArete(i));
                 }
-                for (int i = 0; i < pivot.size_pred() ; i++)
+                for (int i = 0; i < pivot.size_pred() ; i++)///on enregistre les stations par lesquel on passe
                 {
                     preservationPred.push_pred(pivot.GetPred(i));///il va le chercher dans m_chemin
                 }
-                for(unsigned int i = 0 ; i < pivot.size_poidPred() ; i++)
+                for(unsigned int i = 0 ; i < pivot.size_poidPred() ; i++)///ainsi que les poid des arrete par lesquel on passe
                 {
                     preservationPred.push_poidPred(pivot.getPoidChemin(i));
                 }
@@ -257,7 +250,8 @@ void Graphe::Dijkstra(int depart,int arriver,int affichage)
         m_sommets[current]->setVisiteToTrue();
         ///ainsi que tout les chemin qui ont le meme numéro que lui
         setVisiteToTrueAll(listeChemin,current + 1);
-        ///METTRE LA LE POID DES ARRETE DANS LE CHEMIN
+
+        ///on compare les chemin pour prendre le plus court pas deja utiliser
         for(unsigned int i = 0 ; i < listeChemin.size() ; i++)
         {
             if(pivot.calculPoid(m_sommets) > listeChemin[i].calculPoid(m_sommets) && listeChemin[i].getVisite() == false)
@@ -271,9 +265,8 @@ void Graphe::Dijkstra(int depart,int arriver,int affichage)
         }
 
 
-        /*if(listeChemin.size() !=0 )
-            std::cout << "{" <<pivot.getNum()<<"}"<<pivot.calculPoid(m_sommets)<<"|" << std::endl;*/
 
+        ///si on est dans un cul de sac on change de sommet
         if(pivot.getNum() == current + 1)
         {
             for(unsigned int i = 0 ; i < listeChemin.size() ; i++)
@@ -301,24 +294,24 @@ void Graphe::Dijkstra(int depart,int arriver,int affichage)
     {
         std::cout << "tout les plus court chemin  a partir du point rentrer sont :" << std::endl;
 
-        for(unsigned int i = 0;  i < listeCheminFinal.size() ; i++)
+        for(unsigned int i = 0;  i < listeCheminFinal.size()-1 ; i++)///affiche tout les chemin les plus court du point de depart
         {
             listeCheminFinal[i].afficherPred(m_sommets,m_aretes);
         }
 
         std::cout << std::endl;
-        for(int i = 0;  i < listeChemin.size() ; i++)
+        for(int i = 0;  i < listeChemin.size() ; i++)///on prend le chemin le plus court qui arrive a l'arriver
         {
             if(pivot.calculPoid(m_sommets) > listeChemin[i].calculPoid(m_sommets) && listeChemin[i].getNum() == m_sommets[arriver]->getNum())
             {
                 pivot = listeChemin[i];
             }
         }
-        if(pivot.getNum() != arriver + 1)
+        if(pivot.getNum() != arriver + 1)///si il n'existe pas on le dit
         {
             std::cout << "Desoler il n'y y a pas de chemin possible pour aller a cette station." << std::endl;
         }
-        else
+        else///sinon on l'affiche
         {
             int compt = 0;
             float minute = pivot.calculPoid(m_sommets);
@@ -328,7 +321,7 @@ void Graphe::Dijkstra(int depart,int arriver,int affichage)
             std::cout << std::endl << std::endl;
         }
     }
-    else if(affichage == 1)
+    else if(affichage == 1)///un affichage different si on l'utilise pour les préference
     {
         for(int i = 0;  i < listeChemin.size() ; i++)
         {
@@ -348,6 +341,7 @@ void Graphe::Dijkstra(int depart,int arriver,int affichage)
             pivot.afficherPred(m_sommets,m_aretes);
         }
     }
+    ///on reinitialise les donner utiliser pour pouvoir les reutiliser
     for(unsigned int i = 0;  i < m_sommets.size() ; i++)
     {
         m_sommets[i]->setVisiteToFalse();
@@ -483,7 +477,7 @@ void Graphe::CreaMatriceAdja()
 }
 
 
-bool Graphe::AllTrue(std::vector <Sommet> listeChemin)const
+bool Graphe::AllTrue(std::vector <Sommet> listeChemin)const ///on cherche a voir si tout les chemin du dijkstra on été utiliser
 {
 
     int compteur = 0;
@@ -504,6 +498,7 @@ bool Graphe::AllTrue(std::vector <Sommet> listeChemin)const
     }
 }
 
+///fonction permettant de mettre tout les chemin qui finisse par un certain sommet en "visite"
 void Graphe::setVisiteToTrueAll(std::vector <Sommet>& listeChemin,int current)
 {
     for(unsigned int i = 0; i < listeChemin.size() ; i++)
@@ -513,4 +508,84 @@ void Graphe::setVisiteToTrueAll(std::vector <Sommet>& listeChemin,int current)
             listeChemin[i].setVisiteToTrue();
         }
     }
+}
+
+///permet de cacluler le flot
+void Graphe::Clear(int source,int puit)
+{
+    //m_sommets[puit]->ClearSucc();
+    for (unsigned int i = 0 ; i < m_aretes.size() ; i++)
+    {
+        m_aretes[i]->calculFlow(); /// selon le type
+    }
+    for (unsigned int i = 0 ; i < m_aretes.size() ; i++)
+    {
+        if(m_aretes[i]->getNumSecond() == source+1 || m_aretes[i]->getNumFirst() == m_aretes[puit]->getNum())
+        {
+            m_aretes[i]->setFlow(0);///et de creer des puit et des sources
+            //m_aretes[i]->setPoid(0);
+        }
+    }
+    for (unsigned int i = 0 ; i < m_aretes.size() ; i++)
+    {
+        std::cout << m_aretes[i]->getNum() << " " <<m_aretes[i]->getNumFirst()<< ":" << m_aretes[i]->getNumSecond() << "  " << m_aretes[i]->getFlow() << std::endl;
+    }
+}
+
+///MARCHE PAS
+void Graphe::Flot(int source,int puit)
+{
+    Clear(source,puit);
+    int flotMax = 0;
+
+    while(BFS2(source,puit))
+    {
+        ///faire les calculs des nouveaux flot et tout
+        //std::cout << "TERMINEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEER"<< std::endl;
+        flotMax = flotMax + m_sommets[puit]->flowMax();
+    }
+
+    std::cout << "Le flot maximale est : " << flotMax;
+}
+
+///MARCHE PAS
+bool Graphe::BFS2(int source,int puit)
+{
+    for (unsigned int i = 0 ; i < m_sommets.size(); i ++)
+    {
+        m_sommets[i]->setVisiteToFalse();
+        m_sommets[i]->restorePrede();
+    }
+    int current = source;
+    std::queue <Sommet*> fil;
+    m_sommets[current]->setVisiteToTrue();
+    fil.push(m_sommets[current]);
+    while(!fil.empty())
+    {
+        Sommet* pivot = fil.front();
+        ///ajoute les successeurs
+        for(unsigned int i = 0; i < pivot->size_succ(); i++)
+        {
+            int transition = pivot->getSuccNum(i)-1;
+            if(m_sommets[transition]->getVisite() == false && m_sommets[current]->getFlow(i) != 0)///LE PROBLEMES EST LO
+            {
+                Arete* arete = pivot->getSucc(i);
+                m_sommets[transition]->setVisiteToTrue();
+                fil.push(m_sommets[transition]);
+                m_sommets[transition]->setPrede2(pivot,arete);
+
+                //std::cout << pivot->getSuccNum(i);///TESTE
+                //std::cout << arete->getType() << std::endl;///TESTE
+
+                if(m_sommets[transition]->getNum() == puit + 1)
+                {
+                    std::cout << "je rentre";
+                    return true;
+                }
+            }
+        }
+        fil.pop();
+    }
+    //std::cout << "je rentre";
+    return false;
 }

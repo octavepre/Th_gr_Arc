@@ -6,6 +6,7 @@
 //#include "Arete.h"
 #include <fstream>
 #define DEFAULT 0
+#include <algorithm>
 
 class Graphe
 {
@@ -24,13 +25,12 @@ public:
     bool AllTrue(std::vector <Sommet> listeChemin)const;
     void setVisiteToTrueAll(std::vector <Sommet>& PleaseWork,int current);
     void CreaMatriceAdja();
-    /*std::string findTypeArreteMin(int SommetD, int SommetA, int poids);
-    int findPoidsArreteMin(int SommetD, int SommetA);
-    std::string findTypeArreteMin(int SommetD, int SommetA);
-    std::string findTypeArrete(int SommetD, int SommetA, int poids);*/
     void setUtiliserToTrue(){m_utiliser = true;}
     void setUtiliserToFalse(){m_utiliser = false;}
     bool getUtiliser()const{return m_utiliser;}
+    void Clear(int source,int puit);
+    void Flot(int source,int puit);
+    bool BFS2(int source,int puit);
 };
 
 #endif // GRAPHE_H_INCLUDED

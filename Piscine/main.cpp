@@ -16,23 +16,24 @@ void menu(Graphe& ski)
         std::cout << "2. Chercher l'itineraire le plus court" <<std::endl;
         std::cout << "3. Vos chemin prefere" <<std::endl;
         std::cout << "4. Creer profile" << std::endl;
-        std::cout << "5. Quittez" <<std::endl;
+        std::cout << "5. Flot max" <<std::endl;
+        std::cout << "6. Quitter" <<std::endl;
         do
         {
             std::cin >> menu;
         }
-        while(menu < 0 || menu > 5);
+        while(menu < 0 || menu > 6);
 
         switch (menu)
         {
-        case 0:
+        case 0:///on afficher tout les sommet avec leur adjacence
         {
             system("cls");
             ski.afficher();
             system("pause");
             break;
         }
-        case 1:
+        case 1: /// on cherche l'itineraire le plus rapide a l'aide de dijkstra
         {
             int depart=0,arriver=0;
             do
@@ -45,7 +46,7 @@ void menu(Graphe& ski)
             }
             while(depart < 1 || depart > 37 || arriver < 1 || arriver > 37 ||depart == arriver);
             system("cls");
-            ski.setPoidDescente(DEFAULT);
+            ski.setPoidDescente(DEFAULT);///On set les poid en temps
             ski.Dijkstra(depart-1,arriver-1,0);
             std::cout<<std::endl<<"0. Quitter"<<std::endl;
             int shee;
@@ -56,7 +57,7 @@ void menu(Graphe& ski)
             while(shee != 0);
             break;
         }
-        case 2:
+        case 2:///on cherche le chemin le plus court entre une station et une autre soit BFS
         {
             int depart=0,arriver=0;
             do
@@ -77,14 +78,14 @@ void menu(Graphe& ski)
             while(shee != 0);
             break;
         }
-        case 3:
+        case 3:///On utilise les fichier pour aller chercher les preference ainsi quel es username
         {
             ski.setUtiliserToFalse();
             system("cls");
-            ski.setPoidDescente (1);
+            ski.setPoidDescente (1);///on set les poid avec les preferences
             system("cls");
             int depart=0,arriver=0;
-            if(ski.getUtiliser() == true)
+            if(ski.getUtiliser() == true)///si on a trouver un username qui convient
             {
                 do
                 {
@@ -97,7 +98,7 @@ void menu(Graphe& ski)
                 while(depart < 1 || depart > 37 || arriver < 1 || arriver > 37 ||depart == arriver);
                 system("cls");
                 //  std::cout << "SHEEEEEE";
-                ski.Dijkstra(depart-1,arriver-1,1);
+                ski.Dijkstra(depart-1,arriver-1,1);///on effectue un dijkstra avec les poid set en preference
                 std::cout<<std::endl<<"0. Quitter"<<std::endl;
                 int shee;
                 do
@@ -115,20 +116,42 @@ void menu(Graphe& ski)
         }
         case 4:
         {
-            ski.setPoidDescente (2);
+            ski.setPoidDescente (2);///on enregistre les préference
             break;
         }
-        case 5:
+        case 5:///FLOT CASSER
+        {
+            //system("cls");
+            int source = 0,puit = 0;
+
+            do
+            {
+                system("cls");
+                std::cout << "Choisissez une source." << std::endl;
+                std::cin >> source;
+                 std::cout << "Choisissez un puit." << std::endl;
+                 std::cin >> puit;
+            }
+            while(source < 1 || source > 37 || puit < 1 || puit > 37 || puit == source);
+            ///Inutile on a deja les adjacence
+            //ski.CreaMatriceAdja();
+
+            ///https://www.youtube.com/watch?v=GoVjOT30xwo&ab_channel=QuinstonPimenta
+            ///Pour les flots je me suis inspiré de ca
+            ski.Clear(source-1,puit-1);
+            //ski.Flot(source-1,puit-1);
+            system("pause");
+            break;
+        }
+        case 6:///Quitte
         {
             system("cls");
-            //std::cout << "SHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
-            ski.CreaMatriceAdja();
-            system("pause");
+            std::cout << "SHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
             break;
         }
         }
     }
-    while(menu != 5);
+    while(menu != 6);
 }
 
 

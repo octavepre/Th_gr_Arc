@@ -147,7 +147,8 @@ void menu(Graphe& ski)
         case 6:///Quitte
         {
             system("cls");
-            std::cout << "SHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
+            //std::cout << "SHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
+            //std::cout << "Eh merce";
             //ski.BFS2(2,6);
             system("pause");
             break;

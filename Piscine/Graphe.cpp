@@ -601,13 +601,11 @@ int Graphe::BFS2(int source,int puit)
     }
     for(size_t i(0); i<Trajet.size()-1; i++)
     {
-        std::cout<< Trajet[i]->getNum() << " <-- ";
         if(Minflow > Trajet[i+1]->getFlow(Trajet[i]->getNum()))
        {
            Minflow = Trajet[i+1]->getFlow(Trajet[i]->getNum());
        }
     }
-    std::cout<< Trajet[Trajet.size()-1]->getNum() << " <-- " << std::endl;
     for(size_t i(0); i<Trajet.size()-1; i++)
     {
         Trajet[i+1]->setFlow(Trajet[i]->getNum(),Trajet[i+1]->getFlow(Trajet[i]->getNum())-Minflow);
@@ -621,6 +619,5 @@ int Graphe::BFS2(int source,int puit)
     {
         Minflow = 0;
     }
-    std::cout<<"Le flot mini est " << Minflow << std::endl;
     return Minflow;
 }
